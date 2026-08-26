@@ -35,9 +35,10 @@
       <!-- Image Section -->
       <div style="flex: 1 1 350px; min-width: 0; display: flex; align-items: center; justify-content: center; background: var(--color-surface-2); border-radius: var(--radius-md); overflow: hidden; aspect-ratio: 1; box-shadow: inset 0 0 0 1px var(--color-border);">
         @if (p.image_url) {
-          <img [src]="p.image_url" [alt]="p.name" style="width: 100%; height: 100%; object-fit: cover;" />
+          <img [src]="p.image_url" [alt]="p.name" style="width: 100%; height: 100%; object-fit: cover;" (error)="handleImageError($event)" />
+          <div style="display: none; font-size: 5rem; color: var(--color-text-dim); justify-content: center; align-items: center; width: 100%; height: 100%;">📦</div>
         } @else {
-          <div style="font-size: 5rem; color: var(--color-text-dim);">📦</div>
+          <div style="font-size: 5rem; color: var(--color-text-dim); display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">📦</div>
         }
       </div>
 

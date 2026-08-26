@@ -57,4 +57,13 @@ export class CustomerBrowseComponent implements OnInit {
   cartQty(productId: string): number {
     return this.cart.items().find((i) => i.product.id === productId)?.quantity ?? 0;
   }
+
+  handleImageError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.style.display = 'none';
+    const placeholder = img.nextElementSibling as HTMLElement;
+    if (placeholder) {
+      placeholder.style.display = 'flex';
+    }
+  }
 }
