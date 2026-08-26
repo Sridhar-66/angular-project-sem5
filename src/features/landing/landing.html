@@ -1,24 +1,27 @@
-<div class="auth-page" style="flex-direction: column; text-align: center;">
-  <div class="auth-card" style="max-width: 700px; padding: var(--sp-12) var(--sp-8);">
+<div class="auth-page landing-container" style="flex-direction: row; padding: 0; min-height: 100vh; flex-wrap: wrap;">
+  <!-- Left Side: Landing Content -->
+  <div style="flex: 1 1 500px; display: flex; flex-direction: column; justify-content: center; padding: 60px; background: rgba(28, 28, 34, 0.4); border-right: 1px solid var(--color-border);">
     <h1 class="auth-logo" style="font-size: 3.5rem; margin-bottom: var(--sp-4);">
       <span style="font-size: 3rem;">🏛️</span> Thesaurus
     </h1>
     
-    <h2 style="font-size: 1.8rem; color: var(--color-text); margin-bottom: var(--sp-6);">
+    <h2 style="font-size: 2rem; color: var(--color-text); margin-bottom: var(--sp-6);">
       The Smart Ecommerce Platform
     </h2>
     
-    <p style="color: var(--color-text-muted); font-size: 1.15rem; margin-bottom: var(--sp-10); line-height: 1.8;">
+    <p style="color: var(--color-text-muted); font-size: 1.15rem; margin-bottom: var(--sp-10); line-height: 1.8; max-width: 600px;">
       Thesaurus provides a premium, seamless experience for everyone. Whether you're a customer looking for the best products, an administrator managing inventory, or a delivery partner handling orders on the go, our platform is designed to make your life easier.
     </p>
     
-    <div style="display: flex; gap: var(--sp-4); justify-content: center; flex-wrap: wrap;">
-      <a routerLink="/login" class="btn btn-brand btn-lg" style="min-width: 220px; font-size: 1.1rem;">
-        Login to your account →
-      </a>
-      <a routerLink="/signup" class="btn btn-secondary btn-lg" style="min-width: 220px; font-size: 1.1rem;">
-        Create new account
+    <div style="display: flex; gap: var(--sp-4); flex-wrap: wrap;">
+      <a routerLink="/login" class="btn btn-secondary btn-lg" style="min-width: 220px; font-size: 1.1rem;">
+        Already have an account? Sign In →
       </a>
     </div>
+  </div>
+
+  <!-- Right Side: Signup Form -->
+  <div style="flex: 1 1 500px; display: flex; align-items: center; justify-content: center; padding: 40px; background: var(--color-bg);">
+    <app-signup style="width: 100%; display: flex; justify-content: center;"></app-signup>
   </div>
 </div>

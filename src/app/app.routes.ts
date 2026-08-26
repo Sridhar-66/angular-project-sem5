@@ -134,6 +134,6 @@ export const routes: Routes = [
     ],
   },
 
-  // Wildcard: back to login
-  { path: '**', redirectTo: 'login' },
+  // Wildcard: back to landing
+  { path: '**', redirectTo: '' },
 ];
