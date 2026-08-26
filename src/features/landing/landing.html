@@ -1,27 +1,166 @@
-<div class="auth-page landing-container" style="flex-direction: row; padding: 0; min-height: 100vh; flex-wrap: wrap;">
-  <!-- Left Side: Landing Content -->
-  <div style="flex: 1 1 500px; display: flex; flex-direction: column; justify-content: center; padding: 60px; background: rgba(28, 28, 34, 0.4); border-right: 1px solid var(--color-border);">
-    <h1 class="auth-logo" style="font-size: 3.5rem; margin-bottom: var(--sp-4);">
-      <span style="font-size: 3rem;">🏛️</span> Thesaurus
-    </h1>
-    
-    <h2 style="font-size: 2rem; color: var(--color-text); margin-bottom: var(--sp-6);">
-      The Smart Ecommerce Platform
-    </h2>
-    
-    <p style="color: var(--color-text-muted); font-size: 1.15rem; margin-bottom: var(--sp-10); line-height: 1.8; max-width: 600px;">
-      Thesaurus provides a premium, seamless experience for everyone. Whether you're a customer looking for the best products, an administrator managing inventory, or a delivery partner handling orders on the go, our platform is designed to make your life easier.
-    </p>
-    
-    <div style="display: flex; gap: var(--sp-4); flex-wrap: wrap;">
-      <a routerLink="/login" class="btn btn-secondary btn-lg" style="min-width: 220px; font-size: 1.1rem;">
-        Already have an account? Sign In →
-      </a>
+<svg class="grain" width="100%" height="100%">
+  <filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/></filter>
+  <rect width="100%" height="100%" filter="url(#noiseFilter)"/>
+</svg>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <g id="sticker-bag">
+      <path d="M20 34 L28 14 H72 L80 34 Z" fill="var(--yellow)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/>
+      <rect x="16" y="34" width="68" height="54" rx="6" fill="var(--yellow)" stroke="var(--ink)" stroke-width="3"/>
+      <path d="M36 34 C36 22 44 14 50 14 C56 14 64 22 64 34" fill="none" stroke="var(--ink)" stroke-width="3"/>
+      <circle cx="42" cy="52" r="4" fill="var(--ink)"/>
+      <circle cx="58" cy="52" r="4" fill="var(--ink)"/>
+    </g>
+    <g id="sticker-gauge">
+      <circle cx="50" cy="52" r="38" fill="var(--lime)" stroke="var(--ink)" stroke-width="3"/>
+      <path d="M22 60 A30 30 0 0 1 78 60" fill="none" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>
+      <line x1="50" y1="52" x2="66" y2="34" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="50" cy="52" r="5" fill="var(--ink)"/>
+      <circle cx="30" cy="66" r="2.5" fill="var(--ink)"/>
+      <circle cx="70" cy="66" r="2.5" fill="var(--ink)"/>
+    </g>
+    <g id="sticker-scooter">
+      <circle cx="26" cy="76" r="12" fill="var(--paper)" stroke="var(--ink)" stroke-width="3"/>
+      <circle cx="76" cy="76" r="12" fill="var(--paper)" stroke="var(--ink)" stroke-width="3"/>
+      <path d="M26 76 H54 L64 50 H82" fill="none" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="46" y="34" width="26" height="18" rx="4" fill="var(--green)" stroke="var(--ink)" stroke-width="3"/>
+      <path d="M76 50 V38" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>
+    </g>
+  </defs>
+</svg>
+
+<div class="cursor-dot" id="cursorDot"></div>
+
+<nav class="top-nav">
+  <a routerLink="/login" class="nav-btn ghost">Sign in</a>
+  <a routerLink="/signup" class="nav-btn solid">Sign up</a>
+</nav>
+
+<section class="hero">
+  <div class="marquee-band">
+    <div class="track">
+      <span>FAST</span><span>FRESH</span><span>FRICTIONLESS</span><span>FAST</span><span>FRESH</span><span>FRICTIONLESS</span>
     </div>
   </div>
 
-  <!-- Right Side: Signup Form -->
-  <div style="flex: 1 1 500px; display: flex; align-items: center; justify-content: center; padding: 40px; background: var(--color-bg);">
-    <app-signup style="width: 100%; display: flex; justify-content: center;"></app-signup>
+  <div class="headline-wrap">
+    <p class="eyebrow">Built for three kinds of people</p>
+    <h1 class="headline" id="headline" aria-label="The Smart Ecommerce Thesaurus"></h1>
+
+    <div class="rotator" id="rotator" aria-live="polite"></div>
+
+    <p class="sub" style="animation-delay:0.9s;">
+      One platform, three vibes. Customers browse and pay, admins run the catalogue, delivery partners move the goods —
+      all inside the same fast, frictionless Thesaurus.
+    </p>
+    <div class="role-row">
+      <div class="role-pill customer" style="animation:fade-up .6s 1.0s cubic-bezier(.16,1,.3,1) forwards;"><span class="dot"></span>Customer</div>
+      <div class="role-pill admin" style="animation:fade-up .6s 1.1s cubic-bezier(.16,1,.3,1) forwards;"><span class="dot"></span>Admin</div>
+      <div class="role-pill delivery" style="animation:fade-up .6s 1.2s cubic-bezier(.16,1,.3,1) forwards;"><span class="dot"></span>Delivery partner</div>
+    </div>
+    <div class="cta-row">
+      <a routerLink="/signup" class="btn-primary" style="animation:fade-up .6s 1.3s cubic-bezier(.16,1,.3,1) forwards;">Get started free →</a>
+      <a routerLink="/login" class="btn-secondary" style="animation:fade-up .6s 1.4s cubic-bezier(.16,1,.3,1) forwards;">I already have an account</a>
+    </div>
   </div>
+
+  <svg class="sticker" width="80" height="90" viewBox="0 0 100 100" style="top:14%; right:9%; --rot:-6deg;"><use href="#sticker-bag"/></svg>
+</section>
+
+<section class="collage-section">
+  <div class="collage" id="collage">
+    <div class="collage-ring" id="collageRing">
+      <div class="circle-card c1"><img src="https://images.unsplash.com/photo-1607082349566-187342175e2f?w=500&q=80" alt="Cart"></div>
+      <div class="circle-card c2"><img src="https://images.unsplash.com/photo-1574634534894-89d7576c8259?auto=format&fit=crop&q=80&w=500" alt="Customer"></div>
+      <div class="circle-card c3"><img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=500" alt="Admin"></div>
+      <div class="circle-card c4"><img src="https://images.unsplash.com/photo-1617195737496-bc30194e3a19?auto=format&fit=crop&q=80&w=500" alt="Delivery"></div>
+      <div class="circle-card c5"><img src="https://images.unsplash.com/photo-1586880244406-556ebe35f282?auto=format&fit=crop&q=80&w=500" alt="Package"></div>
+    </div>
+    <div class="badge-tag">100% Fresh, Every Order</div>
+  </div>
+</section>
+
+<div class="divider-marquee">
+  <div class="track">
+    <span>REAL-TIME EVERYTHING</span><span>BANK-GRADE SECURITY</span><span>SMART SEARCH</span><span>ADAPTIVE UI</span>
+    <span>REAL-TIME EVERYTHING</span><span>BANK-GRADE SECURITY</span><span>SMART SEARCH</span><span>ADAPTIVE UI</span>
+  </div>
+</div>
+
+<section class="audience customer">
+  <div class="audience-copy">
+    <div class="audience-label"><span class="for">Why shop with us</span>Customers</div>
+    <div class="audience-item">
+      <h4>Lightning fast experience</h4>
+      <p>Say goodbye to clunky interfaces. Thesaurus is engineered for speed, letting you browse, search, and checkout in seconds. Your time is precious — we don't waste it.</p>
+    </div>
+    <div class="audience-item">
+      <h4>Premium curation, always in stock</h4>
+      <p>From everyday groceries to premium electronics, discover a curated catalog with real-time stock updates. If you see it, you can buy it.</p>
+    </div>
+    <div class="audience-item">
+      <h4>Effortless order tracking</h4>
+      <p>Know exactly where your order is at all times. From checkout to your doorstep, live status updates keep you in the loop.</p>
+    </div>
+  </div>
+  <div class="audience-visual">
+    <svg width="220" height="220" viewBox="0 0 100 100" class="sticker" style="position:relative; top:auto; right:auto; --rot:4deg;"><use href="#sticker-bag"/></svg>
+  </div>
+</section>
+
+<section class="audience admin reverse">
+  <div class="audience-copy">
+    <div class="audience-label"><span class="for">Why manage with us</span>Admins</div>
+    <div class="audience-item">
+      <h4>Command center control</h4>
+      <p>Manage your entire inventory, track real-time analytics, and oversee orders from a beautifully designed, intuitive dashboard. You run the business — we handle the complexity.</p>
+    </div>
+    <div class="audience-item">
+      <h4>Instant inventory sync</h4>
+      <p>Never oversell again. Our real-time database ensures your stock levels stay perfectly synced across every active user.</p>
+    </div>
+  </div>
+  <div class="audience-visual">
+    <svg width="200" height="200" viewBox="0 0 100 100" class="sticker" style="position:relative; top:auto; right:auto; --rot:-5deg;"><use href="#sticker-gauge"/></svg>
+  </div>
+</section>
+
+<section class="audience delivery">
+  <div class="audience-copy">
+    <div class="audience-label"><span class="for">Why deliver with us</span>Delivery partners</div>
+    <div class="audience-item">
+      <h4>Streamlined routes, higher earnings</h4>
+      <p>Our smart delivery dashboard assigns orders efficiently. Less time figuring out where to go means more deliveries completed and higher earnings.</p>
+    </div>
+    <div class="audience-item">
+      <h4>Zero friction pickups</h4>
+      <p>Clear instructions, one-tap status updates, and direct customer routing make every delivery a breeze. Just open the app and go.</p>
+    </div>
+  </div>
+  <div class="audience-visual">
+    <svg width="240" height="200" viewBox="0 0 100 100" class="sticker" style="position:relative; top:auto; right:auto; --rot:3deg;"><use href="#sticker-scooter"/></svg>
+  </div>
+</section>
+
+<section class="features">
+  <div class="features-head">
+    <p class="eyebrow">What's under the hood</p>
+    <h2>Everything, engineered in</h2>
+  </div>
+  <div class="feature-grid">
+    <div class="feature-card"><span class="glyph">⚡</span><h4>Real-time everything</h4><p>Stock, carts, and order statuses update instantly. No page refreshes required.</p></div>
+    <div class="feature-card"><span class="glyph">🔒</span><h4>Bank-grade security</h4><p>Your data is protected by industry-leading encryption and authentication.</p></div>
+    <div class="feature-card"><span class="glyph">🔍</span><h4>Smart search</h4><p>Find exactly what you're looking for instantly, even if you don't know the exact name.</p></div>
+    <div class="feature-card"><span class="glyph">✨</span><h4>Adaptive UI</h4><p>A beautiful, frosted-glass design that looks and feels incredible on any device.</p></div>
+  </div>
+</section>
+
+<section class="final-cta">
+  <h2>Ready to shop the <span class="accent">future</span>?</h2>
+  <button class="cta-cycle-btn" id="ctaBtn">Start shopping now</button>
+</section>
+
+<div style="display:flex; justify-content:center; padding:56px 6vw 100px;" id="signup-section">
+  <app-signup></app-signup>
 </div>
