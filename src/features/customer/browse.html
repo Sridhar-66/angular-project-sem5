@@ -61,7 +61,7 @@
 @if (!productSvc.loading() && filteredProducts().length > 0) {
   <div class="products-grid">
     @for (product of filteredProducts(); track product.id) {
-      <div class="product-card card" [class.out-of-stock-card]="product.stock_quantity === 0">
+      <div class="product-card card" [class.out-of-stock-card]="product.stock_quantity === 0" [routerLink]="['/customer/product', product.id]">
         <div class="product-img-wrap">
           @if (product.image_url) {
             <img [src]="product.image_url" [alt]="product.name" class="product-img" />
@@ -96,13 +96,13 @@
               <div class="cart-qty-controls">
                 <button
                   class="qty-btn"
-                  (click)="cart.updateQuantity(product.id, cartQty(product.id) - 1)"
+                  (click)="$event.stopPropagation(); cart.updateQuantity(product.id, cartQty(product.id) - 1)"
                 >−</button>
                 <span class="qty-value">{{ cartQty(product.id) }}</span>
                 <button
                   class="qty-btn"
                   [disabled]="cartQty(product.id) >= product.stock_quantity"
-                  (click)="cart.updateQuantity(product.id, cartQty(product.id) + 1)"
+                  (click)="$event.stopPropagation(); cart.updateQuantity(product.id, cartQty(product.id) + 1)"
                 >+</button>
               </div>
             } @else {
@@ -110,7 +110,7 @@
                 [id]="'add-to-cart-' + product.id"
                 class="btn btn-primary btn-block"
                 [class.btn-added]="addedProductId() === product.id"
-                (click)="addToCart(product)"
+                (click)="$event.stopPropagation(); addToCart(product)"
               >
                 {{ addedProductId() === product.id ? '✅ Added!' : '🛒 Add to Cart' }}
               </button>

@@ -40,6 +40,21 @@ export class ProductService {
     this.loading.set(false);
   }
 
+  /** Fetch a single product by ID */
+  async getProduct(id: string): Promise<Product | null> {
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .eq('id', id)
+      .single();
+    
+    if (error) {
+      console.error('Error fetching product:', error.message);
+      return null;
+    }
+    return data as Product;
+  }
+
   /** Upload image to Supabase Storage; returns public URL */
   private async uploadImage(file: File): Promise<string> {
     const ext = file.name.split('.').pop();
