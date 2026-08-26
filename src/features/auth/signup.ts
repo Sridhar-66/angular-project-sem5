@@ -19,6 +19,39 @@ export class SignupComponent {
   error = signal('');
   success = signal(false);
 
+  // Password strength checks
+  get passwordStrengthScore(): number {
+    let score = 0;
+    const p = this.password;
+    if (!p) return 0;
+    if (p.length >= 8) score++;
+    if (/[A-Z]/.test(p)) score++;
+    if (/[a-z]/.test(p)) score++;
+    if (/\d/.test(p)) score++;
+    if (/[@$!%*?&]/.test(p)) score++;
+    return score;
+  }
+
+  get strengthColor(): string {
+    const score = this.passwordStrengthScore;
+    if (score === 0) return 'var(--color-surface-3)';
+    if (score <= 2) return 'var(--color-danger)';
+    if (score <= 4) return 'var(--color-warning)';
+    return 'var(--color-success)';
+  }
+
+  get strengthLabel(): string {
+    const score = this.passwordStrengthScore;
+    if (score === 0) return '';
+    if (score <= 2) return 'Weak';
+    if (score <= 4) return 'Good';
+    return 'Strong';
+  }
+
+  get isPasswordStrong() {
+    return this.passwordStrengthScore === 5;
+  }
+
   constructor(private auth: AuthService) {}
 
   async onSubmit() {
