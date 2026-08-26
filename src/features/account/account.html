@@ -50,6 +50,18 @@
       </div>
 
       <div class="form-group">
+        <label class="form-label" for="account-address">Address</label>
+        <textarea
+          id="account-address"
+          class="form-input textarea"
+          rows="3"
+          placeholder="Your delivery address..."
+          [ngModel]="address()"
+          (ngModelChange)="address.set($event)"
+        ></textarea>
+      </div>
+
+      <div class="form-group">
         <label class="form-label">Email</label>
         <input
           class="form-input"
@@ -110,13 +122,15 @@
           id="account-new-pw"
           class="form-input"
           type="password"
-          placeholder="At least 6 characters"
+          placeholder="Min. 8 chars, 1 uppercase, 1 number, 1 special"
           [ngModel]="newPassword()"
           (ngModelChange)="newPassword.set($event)"
           autocomplete="new-password"
         />
-        @if (newPassword().length > 0 && newPassword().length < 6) {
-          <span class="form-hint form-hint-error">Password must be at least 6 characters</span>
+        @if (newPassword().length > 0 && !isPasswordFormValid && !passwordsMatch) {
+          <span class="form-hint form-hint-error">Password must meet strength requirements</span>
+        } @else if (newPassword().length > 0 && !isPasswordFormValid && passwordsMatch) {
+          <span class="form-hint form-hint-error">Password must meet strength requirements</span>
         }
       </div>
 

@@ -12,6 +12,7 @@ import { AuthService } from '../../core/auth.service';
 export class AccountComponent implements OnInit {
   // Profile fields
   fullName = signal('');
+  address = signal('');
 
   // Password fields
   currentPassword = signal('');
@@ -30,6 +31,7 @@ export class AccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.fullName.set(this.auth.profile()?.full_name ?? '');
+    this.address.set(this.auth.profile()?.address ?? '');
   }
 
   get roleLabel(): string {
@@ -55,7 +57,8 @@ export class AccountComponent implements OnInit {
   }
 
   get isPasswordFormValid(): boolean {
-    return this.newPassword().length >= 6 && this.passwordsMatch;
+    const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return strongPasswordRegex.test(this.newPassword()) && this.passwordsMatch;
   }
 
   async saveProfile(): Promise<void> {
@@ -64,7 +67,10 @@ export class AccountComponent implements OnInit {
     this.profileSuccess.set('');
     this.profileError.set('');
     try {
-      await this.auth.updateProfile({ full_name: this.fullName().trim() });
+      await this.auth.updateProfile({ 
+        full_name: this.fullName().trim(),
+        address: this.address().trim()
+      });
       this.profileSuccess.set('Profile updated successfully!');
     } catch (e: any) {
       this.profileError.set(e.message ?? 'Failed to update profile.');

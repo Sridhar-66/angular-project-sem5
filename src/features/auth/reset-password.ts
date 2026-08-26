@@ -45,7 +45,8 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   get isValid(): boolean {
-    return this.newPassword.length >= 6 && this.passwordsMatch;
+    const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return strongPasswordRegex.test(this.newPassword) && this.passwordsMatch;
   }
 
   async onSubmit(): Promise<void> {

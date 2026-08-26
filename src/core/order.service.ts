@@ -18,9 +18,10 @@ export interface Order {
   payment_status: 'pending' | 'paid' | 'failed';
   order_status: 'placed' | 'ready_to_deliver' | 'out_for_delivery' | 'delivered';
   delivery_boy_id: string | null;
+  delivery_address: string | null;
   created_at: string;
   order_items?: OrderItem[];
-  profiles?: { full_name: string; email: string };
+  profiles?: { full_name: string; email: string; address?: string };
 }
 
 @Injectable({ providedIn: 'root' })
@@ -32,7 +33,7 @@ export class OrderService {
   private ordersChannel: any = null;
 
   /** Customer: place an order from cart items */
-  async placeOrder(customerId: string, cartItems: CartItem[]): Promise<Order> {
+  async placeOrder(customerId: string, cartItems: CartItem[], deliveryAddress: string): Promise<Order> {
     const totalAmount = cartItems.reduce(
       (sum, item) => sum + item.product.price * item.quantity,
       0
@@ -46,6 +47,7 @@ export class OrderService {
         total_amount: totalAmount,
         payment_status: 'paid', // test-mode: always paid
         order_status: 'placed',
+        delivery_address: deliveryAddress,
       })
       .select()
       .single();

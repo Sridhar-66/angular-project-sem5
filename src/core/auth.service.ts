@@ -10,6 +10,7 @@ export interface Profile {
   email: string;
   full_name: string;
   role: UserRole;
+  address?: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -55,8 +56,8 @@ export class AuthService {
     }
   }
 
-  /** Update the current user's display name */
-  async updateProfile(fields: { full_name?: string }): Promise<void> {
+  /** Update the current user's profile */
+  async updateProfile(fields: { full_name?: string; address?: string }): Promise<void> {
     const userId = this.user()?.id;
     if (!userId) throw new Error('Not authenticated');
     const { error } = await supabase
