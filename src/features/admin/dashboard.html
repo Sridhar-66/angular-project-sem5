@@ -1,0 +1,64 @@
+<!-- Admin Shell Layout -->
+<nav class="navbar">
+  <span class="navbar-brand">🏛️ Thesaurus</span>
+  <span class="navbar-spacer"></span>
+  <div class="navbar-actions">
+    <span class="badge badge-admin">⚙️ Admin</span>
+    <span style="color:var(--color-text-muted); font-size:0.85rem;">{{ auth.profile()?.full_name }}</span>
+    <button id="admin-logout" class="btn btn-secondary btn-sm" (click)="logout()">Sign Out</button>
+  </div>
+</nav>
+
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-header">
+      <div style="font-weight: 800; font-size: 1.2rem; color: var(--color-text); margin-bottom: 4px;">🏛️ Thesaurus</div>
+      <div class="sidebar-title">Admin Portal</div>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <a routerLink="/admin/products" routerLinkActive="active" class="sidebar-link">
+        <span class="sidebar-icon">📦</span> Products
+        <span class="sidebar-badge">{{ productSvc.products().length }}</span>
+      </a>
+      <a routerLink="/admin/orders" routerLinkActive="active" class="sidebar-link">
+        <span class="sidebar-icon">🧾</span> Orders
+        <span class="sidebar-badge">{{ orderSvc.allOrders().length }}</span>
+      </a>
+      <a routerLink="/admin/analytics" routerLinkActive="active" class="sidebar-link">
+        <span class="sidebar-icon">📊</span> Analytics
+      </a>
+      <a routerLink="/admin/account" routerLinkActive="active" class="sidebar-link">
+        <span class="sidebar-icon">👤</span> Account
+      </a>
+    </nav>
+
+    <div class="sidebar-stats">
+      <div class="sidebar-stat">
+        <span class="sidebar-stat-label">Total Revenue</span>
+        <span class="sidebar-stat-value">₹{{ 0 | number }}</span>
+      </div>
+    </div>
+
+    <!-- Notification Bell and User Profile -->
+    <div style="padding: 16px 20px; border-top: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between;">
+      <div style="display: flex; flex-direction: column;">
+        <span style="font-size: 0.85rem; font-weight: 600; color: var(--color-text);">{{ auth.profile()?.full_name }}</span>
+        <span style="font-size: 0.75rem; color: var(--color-text-muted);">Admin</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <app-notification-bell></app-notification-bell>
+        <button class="btn btn-secondary btn-sm" (click)="logout()">Out</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="admin-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
+
+<!-- Global Toasts -->
+<app-toast></app-toast>

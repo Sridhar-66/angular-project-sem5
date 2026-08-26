@@ -1,0 +1,30 @@
+<nav class="navbar">
+  <span class="navbar-brand">🏛️ Thesaurus</span>
+  <span class="navbar-spacer"></span>
+  <div class="navbar-actions" style="align-items: center;">
+    <span class="badge badge-delivery">🚚 Delivery Boy</span>
+    <span style="color:var(--color-text-muted); font-size:0.85rem; margin-right: 8px;">{{ auth.profile()?.full_name }}</span>
+    <app-notification-bell></app-notification-bell>
+    <button id="delivery-logout" class="btn btn-secondary btn-sm" style="margin-left: 8px;" (click)="logout()">Sign Out</button>
+  </div>
+</nav>
+
+<!-- Tab Navigation -->
+<div class="customer-tab-nav">
+  <a routerLink="/delivery/orders" routerLinkActive="active" class="tab-link">
+    🚚 My Orders
+    <span class="tab-badge" *ngIf="orderSvc.myOrders().length > 0">{{ orderSvc.myOrders().length }}</span>
+  </a>
+  <a routerLink="/delivery/analytics" routerLinkActive="active" class="tab-link">
+    📊 Earnings
+  </a>
+  <a routerLink="/delivery/account" routerLinkActive="active" class="tab-link">
+    👤 Account
+  </a>
+</div>
+
+<main class="customer-content">
+  <router-outlet></router-outlet>
+</main>
+
+<app-toast></app-toast>

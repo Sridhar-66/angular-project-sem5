@@ -1,0 +1,113 @@
+<!-- Search & Filter Bar -->
+<div class="browse-toolbar">
+  <div class="browse-search-wrap">
+    <span class="search-icon">🔍</span>
+    <input
+      id="browse-search"
+      class="input browse-search-input"
+      type="search"
+      placeholder="Search products…"
+      [ngModel]="search()"
+      (ngModelChange)="search.set($event)"
+    />
+  </div>
+  <select
+    id="browse-category"
+    class="input browse-category-select"
+    [ngModel]="selectedCategory()"
+    (ngModelChange)="selectedCategory.set($event)"
+  >
+    <option value="">All Categories</option>
+    @for (cat of categories(); track cat) {
+      @if (cat) {
+        <option [value]="cat">{{ cat }}</option>
+      }
+    }
+  </select>
+</div>
+
+<p class="browse-count">{{ filteredProducts().length }} products</p>
+
+<!-- Loading -->
+@if (productSvc.loading()) {
+  <div class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading products…</p>
+  </div>
+}
+
+<!-- Empty -->
+@if (!productSvc.loading() && filteredProducts().length === 0) {
+  <div class="empty-state">
+    <div class="empty-icon">🔍</div>
+    <h3>No products found</h3>
+    <p>Try a different search or category.</p>
+  </div>
+}
+
+<!-- Products Grid -->
+@if (!productSvc.loading() && filteredProducts().length > 0) {
+  <div class="products-grid">
+    @for (product of filteredProducts(); track product.id) {
+      <div class="product-card card" [class.out-of-stock-card]="product.stock_quantity === 0">
+        <div class="product-img-wrap">
+          @if (product.image_url) {
+            <img [src]="product.image_url" [alt]="product.name" class="product-img" />
+          } @else {
+            <div class="product-img-placeholder">📦</div>
+          }
+          @if (product.category) {
+            <span class="product-category-tag">{{ product.category }}</span>
+          }
+          @if (product.stock_quantity === 0) {
+            <div class="out-of-stock-overlay">Out of Stock</div>
+          }
+        </div>
+
+        <div class="product-card-body">
+          <h3 class="product-name">{{ product.name }}</h3>
+          <p class="product-desc">{{ product.description || 'No description available.' }}</p>
+
+          <div class="product-card-footer">
+            <span class="product-price">₹{{ product.price | number:'1.2-2' }}</span>
+            <span
+              class="product-stock-info"
+              [class.low-stock]="product.stock_quantity > 0 && product.stock_quantity <= 5"
+            >
+              {{ product.stock_quantity > 0 ? product.stock_quantity + ' left' : '' }}
+            </span>
+          </div>
+
+          <!-- Add to Cart -->
+          @if (product.stock_quantity > 0) {
+            @if (isInCart(product.id)) {
+              <div class="cart-qty-controls">
+                <button
+                  class="qty-btn"
+                  (click)="cart.updateQuantity(product.id, cartQty(product.id) - 1)"
+                >−</button>
+                <span class="qty-value">{{ cartQty(product.id) }}</span>
+                <button
+                  class="qty-btn"
+                  [disabled]="cartQty(product.id) >= product.stock_quantity"
+                  (click)="cart.updateQuantity(product.id, cartQty(product.id) + 1)"
+                >+</button>
+              </div>
+            } @else {
+              <button
+                [id]="'add-to-cart-' + product.id"
+                class="btn btn-primary btn-block"
+                [class.btn-added]="addedProductId() === product.id"
+                (click)="addToCart(product)"
+              >
+                {{ addedProductId() === product.id ? '✅ Added!' : '🛒 Add to Cart' }}
+              </button>
+            }
+          } @else {
+            <button class="btn btn-secondary btn-block" disabled>Out of Stock</button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+}

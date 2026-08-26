@@ -1,0 +1,99 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">Thesaurus</div>
+    <p class="auth-tagline">Create your account</p>
+
+    @if (success()) {
+      <div style="text-align:center; padding: 24px 0;">
+        <div style="font-size:3rem; margin-bottom:12px;">✅</div>
+        <h3 style="margin-bottom:8px;">Account created!</h3>
+        <p style="color:var(--color-text-muted); font-size:0.9rem; margin-bottom:20px;">
+          Check your email to confirm your account, then sign in.
+        </p>
+        <a routerLink="/login" class="btn btn-primary">Go to Sign In</a>
+      </div>
+    } @else {
+      <form class="auth-form" (ngSubmit)="onSubmit()">
+
+        @if (error()) {
+          <div class="auth-error">{{ error() }}</div>
+        }
+
+        <div class="form-group">
+          <label class="form-label" for="signup-name">Full Name</label>
+          <input
+            id="signup-name"
+            class="form-input"
+            type="text"
+            placeholder="John Doe"
+            [(ngModel)]="fullName"
+            name="fullName"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="signup-email">Email</label>
+          <input
+            id="signup-email"
+            class="form-input"
+            type="email"
+            placeholder="you@example.com"
+            [(ngModel)]="email"
+            name="email"
+            required
+            autocomplete="email"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="signup-password">Password</label>
+          <input
+            id="signup-password"
+            class="form-input"
+            type="password"
+            placeholder="Min. 6 characters"
+            [(ngModel)]="password"
+            name="password"
+            required
+            minlength="6"
+            autocomplete="new-password"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="signup-role">Role</label>
+          <select
+            id="signup-role"
+            class="form-select"
+            [(ngModel)]="role"
+            name="role"
+          >
+            <option value="customer">🛍️ Customer</option>
+            <option value="delivery">🚚 Delivery Boy</option>
+            <option value="admin">⚙️ Admin</option>
+          </select>
+        </div>
+
+        <button
+          id="signup-submit"
+          type="submit"
+          class="btn btn-primary btn-full btn-lg"
+          [disabled]="loading()"
+        >
+          @if (loading()) {
+            <span class="spinner" style="width:18px;height:18px;border-width:2px"></span>
+            Creating account…
+          } @else {
+            Create Account
+          }
+        </button>
+      </form>
+
+      <p class="auth-switch">
+        Already have an account?
+        <a routerLink="/login">Sign in</a>
+      </p>
+    }
+  </div>
+</div>

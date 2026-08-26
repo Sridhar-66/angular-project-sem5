@@ -1,0 +1,63 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">Thesaurus</div>
+    <p class="auth-tagline">Sign in to your account</p>
+
+    <form class="auth-form" (ngSubmit)="onSubmit()" #f="ngForm">
+
+      @if (error()) {
+        <div class="auth-error">{{ error() }}</div>
+      }
+
+      <div class="form-group">
+        <label class="form-label" for="login-email">Email</label>
+        <input
+          id="login-email"
+          class="form-input"
+          type="email"
+          placeholder="you@example.com"
+          [(ngModel)]="email"
+          name="email"
+          required
+          autocomplete="email"
+        />
+      </div>
+
+      <div class="form-group">
+        <div style="display: flex; justify-content: space-between; align-items: baseline;">
+          <label class="form-label" for="login-password">Password</label>
+          <a routerLink="/forgot-password" class="auth-forgot-link">Forgot password?</a>
+        </div>
+        <input
+          id="login-password"
+          class="form-input"
+          type="password"
+          placeholder="••••••••"
+          [(ngModel)]="password"
+          name="password"
+          required
+          autocomplete="current-password"
+        />
+      </div>
+
+      <button
+        id="login-submit"
+        type="submit"
+        class="btn btn-primary btn-full btn-lg"
+        [disabled]="loading()"
+      >
+        @if (loading()) {
+          <span class="spinner" style="width:18px;height:18px;border-width:2px"></span>
+          Signing in…
+        } @else {
+          Sign In
+        }
+      </button>
+    </form>
+
+    <p class="auth-switch">
+      Don't have an account?
+      <a routerLink="/signup">Create one</a>
+    </p>
+  </div>
+</div>

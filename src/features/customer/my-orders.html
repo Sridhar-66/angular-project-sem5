@@ -1,0 +1,93 @@
+<div class="page-header" style="margin-bottom:24px;">
+  <h1 class="page-title">📦 My Orders</h1>
+  <p class="page-subtitle">{{ orderSvc.myOrders().length }} order(s)</p>
+</div>
+
+@if (orderSvc.loading()) {
+  <div class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading orders…</p>
+  </div>
+}
+
+@if (!orderSvc.loading() && orderSvc.myOrders().length === 0) {
+  <div class="empty-state">
+    <div class="empty-icon">📦</div>
+    <h3>No orders yet</h3>
+    <p>Place your first order by browsing products!</p>
+  </div>
+}
+
+@if (!orderSvc.loading() && orderSvc.myOrders().length > 0) {
+  <div class="orders-list">
+    @for (order of orderSvc.myOrders(); track order.id) {
+      <div class="order-card card">
+        <!-- Order Header -->
+        <div
+          class="order-card-header"
+          (click)="toggleExpand(order.id)"
+          style="cursor:pointer;"
+        >
+          <div class="order-meta">
+            <span class="order-id-tag">#{{ order.id.slice(0, 8) }}</span>
+            <span class="order-date">{{ order.created_at | date:'dd MMM yyyy, HH:mm' }}</span>
+          </div>
+
+          <div class="order-status-wrap">
+            <span class="status-badge" [ngClass]="statusClass(order.order_status)">
+              {{ statusLabel(order.order_status) }}
+            </span>
+            <span class="order-total-label">₹{{ order.total_amount | number:'1.2-2' }}</span>
+            <span class="order-expand-icon">{{ expandedOrderId === order.id ? '▲' : '▼' }}</span>
+          </div>
+        </div>
+
+        <!-- Order Items (expandable) -->
+        @if (expandedOrderId === order.id) {
+          <div class="order-items-expand">
+            <div class="order-items-header">Items in this order</div>
+            @for (item of order.order_items || []; track item.id) {
+              <div class="order-item-row">
+                <div class="order-item-img-wrap">
+                  @if (item.product?.image_url) {
+                    <img [src]="item.product!.image_url!" [alt]="item.product!.name" class="order-item-thumb" />
+                  } @else {
+                    <div class="order-item-thumb-placeholder">📦</div>
+                  }
+                </div>
+                <div class="order-item-details">
+                  <span class="order-item-name">{{ item.product?.name }}</span>
+                  <span class="order-item-info">Qty: {{ item.quantity }} × ₹{{ item.price_at_purchase | number:'1.2-2' }}</span>
+                </div>
+                <span class="order-item-total">₹{{ (item.price_at_purchase * item.quantity) | number:'1.2-2' }}</span>
+              </div>
+            }
+
+            <!-- Status Timeline -->
+            <div class="status-timeline">
+              <div class="timeline-step" [class.done]="['placed','ready_to_deliver','out_for_delivery','delivered'].includes(order.order_status)">
+                <div class="timeline-dot"></div>
+                <span>Order Placed</span>
+              </div>
+              <div class="timeline-line" [class.done]="['ready_to_deliver','out_for_delivery','delivered'].includes(order.order_status)"></div>
+              <div class="timeline-step" [class.done]="['ready_to_deliver','out_for_delivery','delivered'].includes(order.order_status)">
+                <div class="timeline-dot"></div>
+                <span>Ready</span>
+              </div>
+              <div class="timeline-line" [class.done]="['out_for_delivery','delivered'].includes(order.order_status)"></div>
+              <div class="timeline-step" [class.done]="['out_for_delivery','delivered'].includes(order.order_status)">
+                <div class="timeline-dot"></div>
+                <span>Out for Delivery</span>
+              </div>
+              <div class="timeline-line" [class.done]="order.order_status === 'delivered'"></div>
+              <div class="timeline-step" [class.done]="order.order_status === 'delivered'">
+                <div class="timeline-dot"></div>
+                <span>Delivered</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}

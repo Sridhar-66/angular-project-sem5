@@ -1,0 +1,101 @@
+<div class="checkout-layout">
+  <!-- Order Summary Panel -->
+  <div class="checkout-summary card">
+    <h2 class="checkout-section-title">📋 Order Summary</h2>
+    @for (item of cart.items(); track item.product.id) {
+      <div class="checkout-item">
+        <div class="checkout-item-info">
+          <span class="checkout-item-name">{{ item.product.name }}</span>
+          <span class="checkout-item-qty">× {{ item.quantity }}</span>
+        </div>
+        <span class="checkout-item-price">₹{{ (item.product.price * item.quantity) | number:'1.2-2' }}</span>
+      </div>
+    }
+    <div class="checkout-divider"></div>
+    <div class="checkout-total">
+      <span>Total</span>
+      <span class="checkout-total-price">₹{{ cart.cartTotal() | number:'1.2-2' }}</span>
+    </div>
+
+    <div class="checkout-test-badge">
+      🧪 Test Mode — No real payment processed
+    </div>
+  </div>
+
+  <!-- Payment Form -->
+  <div class="checkout-form card">
+    <h2 class="checkout-section-title">💳 Payment Details</h2>
+
+    @if (error()) {
+      <div class="alert alert-danger">{{ error() }}</div>
+    }
+
+    <div class="form-group">
+      <label class="form-label" for="card-name">Name on Card</label>
+      <input
+        id="card-name"
+        class="input"
+        type="text"
+        placeholder="John Doe"
+        [ngModel]="cardName()"
+        (ngModelChange)="cardName.set($event)"
+      />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="card-number">Card Number</label>
+      <div class="card-input-wrap">
+        <span class="card-icon">💳</span>
+        <input
+          id="card-number"
+          class="input card-number-input"
+          type="text"
+          placeholder="4242 4242 4242 4242"
+          maxlength="19"
+          [value]="cardNumber()"
+          (input)="formatCardNumber($event)"
+        />
+      </div>
+      <p class="form-hint">Use any 16-digit number for testing</p>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="card-expiry">Expiry</label>
+        <input
+          id="card-expiry"
+          class="input"
+          type="text"
+          placeholder="MM/YY"
+          maxlength="5"
+          [ngModel]="cardExpiry()"
+          (ngModelChange)="cardExpiry.set($event)"
+        />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="card-cvc">CVC</label>
+        <input
+          id="card-cvc"
+          class="input"
+          type="text"
+          placeholder="123"
+          maxlength="4"
+          [ngModel]="cardCvc()"
+          (ngModelChange)="cardCvc.set($event)"
+        />
+      </div>
+    </div>
+
+    <div class="checkout-actions">
+      <button class="btn btn-secondary" (click)="backToCart()">← Back to Cart</button>
+      <button
+        id="place-order-btn"
+        class="btn btn-primary"
+        [disabled]="placing() || !isFormValid"
+        (click)="placeOrder()"
+      >
+        {{ placing() ? '⏳ Placing Order…' : '✅ Place Order — ₹' + (cart.cartTotal() | number:'1.2-2') }}
+      </button>
+    </div>
+  </div>
+</div>

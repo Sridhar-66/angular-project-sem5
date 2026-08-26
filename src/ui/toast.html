@@ -1,0 +1,21 @@
+<div class="toast-container" style="position: fixed; top: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; pointer-events: none;">
+  @for (toast of activeToasts(); track toast.id) {
+    <div 
+      class="toast" 
+      style="background: var(--color-surface); border: 1px solid var(--color-border); border-left: 4px solid var(--color-accent); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); padding: 16px; width: 320px; display: flex; justify-content: space-between; align-items: flex-start; pointer-events: auto; animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1);"
+    >
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent-2);">
+          {{ toast.type === 'order_placed' ? 'New Order' : 'Status Update' }}
+        </span>
+        <span style="font-size: 0.9rem; color: var(--color-text); line-height: 1.4;">
+          {{ toast.message }}
+        </span>
+      </div>
+      <button 
+        (click)="dismiss(toast.id)" 
+        style="background: none; border: none; color: var(--color-text-muted); cursor: pointer; padding: 4px; border-radius: 4px; line-height: 1; transition: background 0.2s;"
+      >✕</button>
+    </div>
+  }
+</div>

@@ -1,0 +1,156 @@
+<div class="page container" style="max-width: 700px; margin: 0 auto; padding: 32px 16px;">
+
+  <!-- Page Header -->
+  <div class="page-header" style="margin-bottom: 32px;">
+    <h1 class="page-title">👤 My Account</h1>
+    <p class="page-subtitle">Manage your profile and security settings</p>
+  </div>
+
+  <!-- Role + Identity Card -->
+  <div class="card account-identity-card" style="padding: 24px; margin-bottom: 24px; display: flex; align-items: center; gap: 20px;">
+    <div class="account-avatar">
+      {{ auth.profile()?.full_name?.charAt(0)?.toUpperCase() || '?' }}
+    </div>
+    <div>
+      <div style="font-size: 1.2rem; font-weight: 700; color: var(--color-text); margin-bottom: 4px;">
+        {{ auth.profile()?.full_name || 'No name set' }}
+      </div>
+      <div style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 8px;">
+        {{ auth.user()?.email }}
+      </div>
+      <span class="badge" [ngClass]="roleClass">{{ roleLabel }}</span>
+    </div>
+  </div>
+
+  <!-- Profile Info Section -->
+  <div class="card account-section" style="margin-bottom: 24px;">
+    <div class="account-section-header">
+      <h2 class="account-section-title">📝 Personal Information</h2>
+      <p class="account-section-sub">Update your display name</p>
+    </div>
+
+    <div class="account-section-body">
+      @if (profileSuccess()) {
+        <div class="alert-success">✅ {{ profileSuccess() }}</div>
+      }
+      @if (profileError()) {
+        <div class="auth-error">{{ profileError() }}</div>
+      }
+
+      <div class="form-group">
+        <label class="form-label" for="account-fullname">Full Name</label>
+        <input
+          id="account-fullname"
+          class="form-input"
+          type="text"
+          placeholder="Your full name"
+          [ngModel]="fullName()"
+          (ngModelChange)="fullName.set($event)"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input
+          class="form-input"
+          type="email"
+          [value]="auth.user()?.email || ''"
+          readonly
+          style="opacity: 0.6; cursor: not-allowed;"
+        />
+        <span class="form-hint">Email cannot be changed here.</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Role</label>
+        <input
+          class="form-input"
+          type="text"
+          [value]="auth.profile()?.role || ''"
+          readonly
+          style="opacity: 0.6; cursor: not-allowed; text-transform: capitalize;"
+        />
+      </div>
+
+      <div style="display: flex; justify-content: flex-end;">
+        <button
+          class="btn btn-primary"
+          [disabled]="savingProfile() || !fullName().trim()"
+          (click)="saveProfile()"
+        >
+          @if (savingProfile()) {
+            <span class="spinner" style="width:16px;height:16px;border-width:2px"></span>
+            Saving…
+          } @else {
+            Save Profile
+          }
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Change Password Section -->
+  <div class="card account-section">
+    <div class="account-section-header">
+      <h2 class="account-section-title">🔒 Change Password</h2>
+      <p class="account-section-sub">Set a new password for your account</p>
+    </div>
+
+    <div class="account-section-body">
+      @if (passwordSuccess()) {
+        <div class="alert-success">✅ {{ passwordSuccess() }}</div>
+      }
+      @if (passwordError()) {
+        <div class="auth-error">{{ passwordError() }}</div>
+      }
+
+      <div class="form-group">
+        <label class="form-label" for="account-new-pw">New Password</label>
+        <input
+          id="account-new-pw"
+          class="form-input"
+          type="password"
+          placeholder="At least 6 characters"
+          [ngModel]="newPassword()"
+          (ngModelChange)="newPassword.set($event)"
+          autocomplete="new-password"
+        />
+        @if (newPassword().length > 0 && newPassword().length < 6) {
+          <span class="form-hint form-hint-error">Password must be at least 6 characters</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="account-confirm-pw">Confirm New Password</label>
+        <input
+          id="account-confirm-pw"
+          class="form-input"
+          type="password"
+          placeholder="Repeat your new password"
+          [ngModel]="confirmPassword()"
+          (ngModelChange)="confirmPassword.set($event)"
+          autocomplete="new-password"
+        />
+        @if (confirmPassword().length > 0 && !passwordsMatch) {
+          <span class="form-hint form-hint-error">Passwords do not match</span>
+        }
+      </div>
+
+      <div style="display: flex; justify-content: flex-end;">
+        <button
+          class="btn btn-primary"
+          [disabled]="savingPassword() || !isPasswordFormValid"
+          (click)="changePassword()"
+        >
+          @if (savingPassword()) {
+            <span class="spinner" style="width:16px;height:16px;border-width:2px"></span>
+            Updating…
+          } @else {
+            Update Password
+          }
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>

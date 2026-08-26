@@ -1,0 +1,47 @@
+<!-- Customer Shell Layout -->
+<nav class="navbar">
+  <span class="navbar-brand">🏛️ Thesaurus</span>
+  <span class="navbar-spacer"></span>
+  <div class="navbar-actions" style="align-items: center;">
+    <!-- Cart badge -->
+    <a id="customer-nav-cart" routerLink="cart" class="cart-nav-btn" style="margin-right: 8px;">
+      🛒
+      @if (cart.itemCount() > 0) {
+        <span class="cart-count-badge">{{ cart.itemCount() }}</span>
+      }
+    </a>
+    
+    <!-- Notification Bell -->
+    <app-notification-bell></app-notification-bell>
+
+    <span class="badge badge-customer" style="margin-left: 8px;">🛍️ Customer</span>
+    <span style="color:var(--color-text-muted); font-size:0.85rem;">{{ auth.profile()?.full_name }}</span>
+    <button id="customer-logout" class="btn btn-secondary btn-sm" (click)="logout()">Sign Out</button>
+  </div>
+</nav>
+
+<!-- Tab Navigation -->
+<div class="customer-tab-nav">
+  <a id="customer-tab-browse" routerLink="browse" routerLinkActive="active" class="tab-link">
+    🔍 Browse
+  </a>
+  <a id="customer-tab-cart" routerLink="cart" routerLinkActive="active" class="tab-link">
+    🛒 Cart
+    @if (cart.itemCount() > 0) {
+      <span class="tab-badge">{{ cart.itemCount() }}</span>
+    }
+  </a>
+  <a id="customer-tab-orders" routerLink="my-orders" routerLinkActive="active" class="tab-link">
+    📦 My Orders
+  </a>
+  <a routerLink="account" routerLinkActive="active" class="tab-link">
+    👤 Account
+  </a>
+</div>
+
+<main class="customer-content">
+  <router-outlet></router-outlet>
+</main>
+
+<!-- Global Toasts -->
+<app-toast></app-toast>
