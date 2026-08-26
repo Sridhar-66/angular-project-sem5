@@ -2,8 +2,13 @@ import { Routes } from '@angular/router';
 import { roleGuard, guestGuard } from '../core/auth.guard';
 
 export const routes: Routes = [
-  // Default: redirect to login
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  // Default: Landing page
+  {
+    path: '',
+    loadComponent: () =>
+      import('../features/landing/landing').then((m) => m.LandingComponent),
+    pathMatch: 'full'
+  },
 
   // ── Auth routes (guest-only) ──────────────────────────────
   {

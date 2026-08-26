@@ -47,7 +47,7 @@ Before touching any screens, set up the shared design system only:
 - Base reusable classes/mixins: frosted-glass blur surfaces, button states
   (default/hover/active/press-scale), card hover-lift, shimmer skeleton loader
 
-Don't touch any actual screens yet. Show me the tokens before moving on.
+say ok
 
 ## Step 1 — Admin Portal only
 
