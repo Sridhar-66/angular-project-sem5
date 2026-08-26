@@ -28,11 +28,23 @@
 
 <p class="browse-count">{{ filteredProducts().length }} products</p>
 
-<!-- Loading -->
+<!-- Loading: shimmer skeleton -->
 @if (productSvc.loading()) {
-  <div class="loading-state">
-    <div class="spinner"></div>
-    <p>Loading products…</p>
+  <div class="skeleton-grid">
+    @for (i of [1,2,3,4,5,6,8,9]; track i) {
+      <div class="card skeleton-card" style="padding:0; border:1px solid var(--color-border); overflow:hidden;">
+        <div class="skeleton skeleton-img"></div>
+        <div style="padding:16px; display:flex; flex-direction:column; gap:10px;">
+          <div class="skeleton skeleton-line medium"></div>
+          <div class="skeleton skeleton-line short"></div>
+          <div style="display:flex; justify-content:space-between; margin-top:4px;">
+            <div class="skeleton" style="height:14px; width:30%; border-radius:6px;"></div>
+            <div class="skeleton" style="height:14px; width:20%; border-radius:6px;"></div>
+          </div>
+          <div class="skeleton" style="height:40px; border-radius:12px; margin-top:4px;"></div>
+        </div>
+      </div>
+    }
   </div>
 }
 

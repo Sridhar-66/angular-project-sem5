@@ -1,10 +1,12 @@
 <!-- Admin Shell Layout -->
-<nav class="navbar">
-  <span class="navbar-brand">🏛️ Thesaurus</span>
+<nav class="navbar navbar-admin">
+  <span class="navbar-brand">
+    <span style="font-size:1.1rem;">🏛️</span> Thesaurus
+  </span>
   <span class="navbar-spacer"></span>
   <div class="navbar-actions">
     <span class="badge badge-admin">⚙️ Admin</span>
-    <span style="color:var(--color-text-muted); font-size:0.85rem;">{{ auth.profile()?.full_name }}</span>
+    <span style="color:var(--color-text-muted); font-size:0.85rem; font-weight:600;">{{ auth.profile()?.full_name }}</span>
     <button id="admin-logout" class="btn btn-secondary btn-sm" (click)="logout()">Sign Out</button>
   </div>
 </nav>
@@ -13,10 +15,10 @@
   <!-- Sidebar -->
   <aside class="admin-sidebar">
     <div class="sidebar-header">
-      <div style="font-weight: 800; font-size: 1.2rem; color: var(--color-text); margin-bottom: 4px;">🏛️ Thesaurus</div>
+      <div style="font-weight: 800; font-size: 1.15rem; background: var(--gradient-brand); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 6px; letter-spacing:-0.03em;">🏛️ Thesaurus</div>
       <div class="sidebar-title">Admin Portal</div>
     </div>
-    
+
     <nav class="sidebar-nav">
       <a routerLink="/admin/products" routerLinkActive="active" class="sidebar-link">
         <span class="sidebar-icon">📦</span> Products
@@ -41,15 +43,20 @@
       </div>
     </div>
 
-    <!-- Notification Bell and User Profile -->
-    <div style="padding: 16px 20px; border-top: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between;">
-      <div style="display: flex; flex-direction: column;">
-        <span style="font-size: 0.85rem; font-weight: 600; color: var(--color-text);">{{ auth.profile()?.full_name }}</span>
-        <span style="font-size: 0.75rem; color: var(--color-text-muted);">Admin</span>
+    <!-- User Profile strip -->
+    <div style="padding: 16px 20px; border-top: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between; background: rgba(245,158,11,0.04);">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="width:36px; height:36px; border-radius:50%; background:rgba(245,158,11,0.18); border:2px solid var(--color-admin-accent); display:flex; align-items:center; justify-content:center; font-size:1rem; font-weight:800; color:var(--color-admin-accent);">
+          {{ (auth.profile()?.full_name || 'A')[0].toUpperCase() }}
+        </div>
+        <div style="display: flex; flex-direction: column; line-height:1.3;">
+          <span style="font-size: 0.85rem; font-weight: 700; color: var(--color-text);">{{ auth.profile()?.full_name }}</span>
+          <span style="font-size: 0.7rem; color: var(--color-admin-accent); font-weight:600; text-transform:uppercase; letter-spacing:0.06em;">Admin</span>
+        </div>
       </div>
-      <div style="display: flex; align-items: center; gap: 8px;">
+      <div style="display: flex; align-items: center; gap: 6px;">
         <app-notification-bell></app-notification-bell>
-        <button class="btn btn-secondary btn-sm" (click)="logout()">Out</button>
+        <button class="btn btn-secondary btn-sm" (click)="logout()" title="Sign out">↩</button>
       </div>
     </div>
   </aside>

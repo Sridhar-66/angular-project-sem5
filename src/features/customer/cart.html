@@ -1,6 +1,6 @@
 <div class="page-header" style="margin-bottom:24px;">
   <h1 class="page-title">🛒 Cart</h1>
-  <p class="page-subtitle">{{ cart.itemCount() }} item(s) • ₹{{ cart.cartTotal() | number:'1.2-2' }} total</p>
+  <p class="page-subtitle">{{ cart.itemCount() }} item(s) · ₹{{ cart.cartTotal() | number:'1.2-2' }} total</p>
 </div>
 
 @if (cart.items().length === 0) {
@@ -8,7 +8,7 @@
     <div class="empty-icon">🛒</div>
     <h3>Your cart is empty</h3>
     <p>Add products from the browse page.</p>
-    <button id="go-browse-btn" class="btn btn-primary" (click)="continueShopping()">
+    <button id="go-browse-btn" class="btn btn-primary" style="margin-top:8px;" (click)="continueShopping()">
       Browse Products
     </button>
   </div>
@@ -37,12 +37,12 @@
           </div>
 
           <div class="cart-item-controls">
-            <div class="cart-qty-controls">
+            <div class="cart-qty-controls" style="width:auto; flex-direction:row;">
               <button
                 class="qty-btn"
                 (click)="cart.updateQuantity(item.product.id, item.quantity - 1)"
               >−</button>
-              <span class="qty-value">{{ item.quantity }}</span>
+              <span class="qty-value" style="min-width:32px;">{{ item.quantity }}</span>
               <button
                 class="qty-btn"
                 [disabled]="item.quantity >= item.product.stock_quantity"
@@ -65,7 +65,7 @@
     </div>
 
     <!-- Order Summary -->
-    <div class="cart-summary card">
+    <div class="cart-summary card glass">
       <h3 class="cart-summary-title">Order Summary</h3>
 
       <div class="cart-summary-rows">

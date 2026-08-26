@@ -1,50 +1,52 @@
 <div class="bell-container" style="position: relative; display: inline-block;">
-  <button 
-    class="bell-button" 
-    style="background: transparent; border: none; cursor: pointer; font-size: 1.4rem; position: relative; padding: 4px 6px; border-radius: var(--radius-sm); transition: background var(--transition);"
+  <button
+    class="bell-btn"
     (click)="toggleDropdown()"
     title="Notifications"
+    style="width:40px; height:40px; font-size:1.2rem;"
   >
     🔔
     @if (notifSvc.unreadCount() > 0) {
-      <span class="bell-badge" style="position: absolute; top: 0; right: 0; background: var(--color-danger); color: white; font-size: 0.65rem; font-weight: 800; min-width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-        {{ notifSvc.unreadCount() }}
-      </span>
+      <span class="bell-badge">{{ notifSvc.unreadCount() }}</span>
     }
   </button>
 
   @if (dropdownOpen) {
-    <div class="bell-dropdown" style="position: absolute; top: 100%; right: 0; margin-top: 8px; width: 320px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); z-index: 1000; overflow: hidden; animation: slideUp 0.15s ease;">
-      <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--color-border); background: var(--color-surface-2);">
-        <span style="font-weight: 700; font-size: 0.9rem;">Notifications</span>
+    <div class="notification-dropdown">
+      <div class="notification-header">
+        <span>Notifications</span>
         @if (notifSvc.unreadCount() > 0) {
-          <button style="background: none; border: none; color: var(--color-accent); font-size: 0.75rem; cursor: pointer; font-weight: 600;" (click)="markAllRead()">Mark all as read</button>
+          <button
+            style="background: none; border: none; color: var(--color-brand); font-size: 0.75rem; cursor: pointer; font-weight: 700; transition: opacity 0.2s;"
+            (click)="markAllRead()"
+          >Mark all read</button>
         }
       </div>
 
-      <div style="max-height: 360px; overflow-y: auto;">
+      <div class="notification-list">
         @if (notifSvc.notifications().length === 0) {
-          <div style="padding: 24px 16px; text-align: center; color: var(--color-text-muted); font-size: 0.85rem;">
+          <div class="notification-empty">
+            <div style="font-size:2rem; opacity:0.5; margin-bottom:8px;">🔔</div>
             No notifications yet
           </div>
         }
-        
+
         @for (notif of notifSvc.notifications(); track notif.id) {
-          <div 
-            class="notif-item" 
+          <div
+            class="notification-item"
             [class.unread]="!notif.is_read"
             (click)="markAsRead(notif.id)"
-            style="padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.04); cursor: pointer; display: flex; flex-direction: column; gap: 4px; transition: background var(--transition);"
           >
             <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
-              <span style="font-size: 0.85rem; color: var(--color-text); line-height: 1.3;" [style.font-weight]="!notif.is_read ? '600' : '400'">
-                {{ notif.message }}
-              </span>
+              <span
+                class="notif-msg"
+                [style.font-weight]="!notif.is_read ? '700' : '400'"
+              >{{ notif.message }}</span>
               @if (!notif.is_read) {
-                <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-accent); flex-shrink: 0; margin-top: 4px;"></div>
+                <div style="width:8px; height:8px; border-radius:50%; background:var(--color-brand); flex-shrink:0; margin-top:4px; box-shadow: 0 0 6px var(--color-brand-glow);"></div>
               }
             </div>
-            <span style="font-size: 0.7rem; color: var(--color-text-muted);">{{ notif.created_at | date:'dd MMM, HH:mm' }}</span>
+            <span class="notif-time">{{ notif.created_at | date:'dd MMM, HH:mm' }}</span>
           </div>
         }
       </div>

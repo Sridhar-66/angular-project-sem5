@@ -1,19 +1,21 @@
-<nav class="navbar">
-  <span class="navbar-brand">🏛️ Thesaurus</span>
+<nav class="navbar navbar-delivery">
+  <span class="navbar-brand">
+    <span style="font-size:1.1rem;">🏛️</span> Thesaurus
+  </span>
   <span class="navbar-spacer"></span>
-  <div class="navbar-actions" style="align-items: center;">
-    <span class="badge badge-delivery">🚚 Delivery Boy</span>
-    <span style="color:var(--color-text-muted); font-size:0.85rem; margin-right: 8px;">{{ auth.profile()?.full_name }}</span>
+  <div class="navbar-actions">
+    <span class="badge badge-delivery">🚚 Delivery</span>
+    <span style="color:var(--color-text-muted); font-size:0.85rem; font-weight:600;">{{ auth.profile()?.full_name }}</span>
     <app-notification-bell></app-notification-bell>
-    <button id="delivery-logout" class="btn btn-secondary btn-sm" style="margin-left: 8px;" (click)="logout()">Sign Out</button>
+    <button id="delivery-logout" class="btn btn-secondary btn-sm" (click)="logout()">Sign Out</button>
   </div>
 </nav>
 
-<!-- Tab Navigation -->
-<div class="customer-tab-nav">
+<!-- Tab Navigation (emerald accent) -->
+<div class="customer-tab-nav delivery-tabs">
   <a routerLink="/delivery/orders" routerLinkActive="active" class="tab-link">
     🚚 My Orders
-    <span class="tab-badge" *ngIf="orderSvc.myOrders().length > 0">{{ orderSvc.myOrders().length }}</span>
+    <span class="tab-badge" style="background:var(--color-delivery-accent);" *ngIf="orderSvc.myOrders().length > 0">{{ orderSvc.myOrders().length }}</span>
   </a>
   <a routerLink="/delivery/analytics" routerLinkActive="active" class="tab-link">
     📊 Earnings

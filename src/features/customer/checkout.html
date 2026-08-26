@@ -1,6 +1,6 @@
 <div class="checkout-layout">
   <!-- Order Summary Panel -->
-  <div class="checkout-summary card">
+  <div class="checkout-summary card glass">
     <h2 class="checkout-section-title">📋 Order Summary</h2>
     @for (item of cart.items(); track item.product.id) {
       <div class="checkout-item">
@@ -27,10 +27,10 @@
     <h2 class="checkout-section-title">💳 Payment Details</h2>
 
     @if (error()) {
-      <div class="alert alert-danger">{{ error() }}</div>
+      <div class="alert alert-danger" style="margin-bottom:16px;">{{ error() }}</div>
     }
 
-    <div class="form-group">
+    <div class="form-group" style="margin-bottom:16px;">
       <label class="form-label" for="card-name">Name on Card</label>
       <input
         id="card-name"
@@ -42,7 +42,7 @@
       />
     </div>
 
-    <div class="form-group">
+    <div class="form-group" style="margin-bottom:16px;">
       <label class="form-label" for="card-number">Card Number</label>
       <div class="card-input-wrap">
         <span class="card-icon">💳</span>
@@ -59,7 +59,7 @@
       <p class="form-hint">Use any 16-digit number for testing</p>
     </div>
 
-    <div class="form-row">
+    <div class="form-row" style="margin-bottom:16px;">
       <div class="form-group">
         <label class="form-label" for="card-expiry">Expiry</label>
         <input

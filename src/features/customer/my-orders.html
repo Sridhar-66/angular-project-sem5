@@ -38,7 +38,8 @@
               {{ statusLabel(order.order_status) }}
             </span>
             <span class="order-total-label">₹{{ order.total_amount | number:'1.2-2' }}</span>
-            <span class="order-expand-icon">{{ expandedOrderId === order.id ? '▲' : '▼' }}</span>
+            <span class="order-expand-icon" style="transition: transform 0.2s ease;"
+              [style.transform]="expandedOrderId === order.id ? 'rotate(180deg)' : 'rotate(0)'">▼</span>
           </div>
         </div>
 
