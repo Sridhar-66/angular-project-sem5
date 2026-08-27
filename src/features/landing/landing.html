@@ -1,176 +1,660 @@
-<svg class="grain" width="100%" height="100%">
-  <filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/></filter>
-  <rect width="100%" height="100%" filter="url(#noiseFilter)"/>
-</svg>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!-- reusable cutout sticker shapes (flat line-art, no bounding box) -->
-<svg width="0" height="0" style="position:absolute">
-  <defs>
-    <g id="sticker-bag">
-      <path d="M20 34 L28 14 H72 L80 34 Z" fill="var(--yellow)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/>
-      <rect x="16" y="34" width="68" height="54" rx="6" fill="var(--yellow)" stroke="var(--ink)" stroke-width="3"/>
-      <path d="M36 34 C36 22 44 14 50 14 C56 14 64 22 64 34" fill="none" stroke="var(--ink)" stroke-width="3"/>
-      <circle cx="42" cy="52" r="4" fill="var(--ink)"/>
-      <circle cx="58" cy="52" r="4" fill="var(--ink)"/>
-    </g>
-    <g id="sticker-gauge">
-      <circle cx="50" cy="52" r="38" fill="var(--lime)" stroke="var(--ink)" stroke-width="3"/>
-      <path d="M22 60 A30 30 0 0 1 78 60" fill="none" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>
-      <line x1="50" y1="52" x2="66" y2="34" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>
-      <circle cx="50" cy="52" r="5" fill="var(--ink)"/>
-      <circle cx="30" cy="66" r="2.5" fill="var(--ink)"/>
-      <circle cx="70" cy="66" r="2.5" fill="var(--ink)"/>
-    </g>
-    <g id="sticker-scooter">
-      <circle cx="26" cy="76" r="12" fill="var(--paper)" stroke="var(--ink)" stroke-width="3"/>
-      <circle cx="76" cy="76" r="12" fill="var(--paper)" stroke="var(--ink)" stroke-width="3"/>
-      <path d="M26 76 H54 L64 50 H82" fill="none" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-      <rect x="46" y="34" width="26" height="18" rx="4" fill="var(--green)" stroke="var(--ink)" stroke-width="3"/>
-      <path d="M76 50 V38" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>
-    </g>
-  </defs>
-</svg>
+  <title>THESAURUS — Shop Different</title>
 
-<div class="cursor-dot" id="cursorDot"></div>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-<nav class="top-nav">
-  <a routerLink="/login" class="nav-btn ghost">Sign in</a>
-  <a routerLink="/signup" class="nav-btn solid">Sign up</a>
-</nav>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
 
-<section class="hero">
-  <div class="marquee-band">
-    <div class="track">
-      <span>FAST</span><span>FRESH</span><span>FRICTIONLESS</span><span>FAST</span><span>FRESH</span><span>FRICTIONLESS</span>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  />
+
+  <link rel="stylesheet" href="landing.css" />
+</head>
+
+<body>
+
+  <div class="noise"></div>
+  <div class="cursor-glow"></div>
+
+  <!-- BACKGROUND -->
+  <div class="bg-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- NAVBAR -->
+
+  <nav class="navbar">
+
+    <a href="#" class="logo magnetic">
+      THESAURUS<span>.</span>
+    </a>
+
+    <div class="nav-center">
+      <a href="#discover">Discover</a>
+      <a href="#features">Features</a>
+      <a href="#experience">Experience</a>
     </div>
-  </div>
 
-  <div class="headline-wrap">
-    <p class="eyebrow">Built for three kinds of people</p>
-    <h1 class="headline" id="headline" aria-label="The Smart Ecommerce Thesaurus"></h1>
+    <div class="nav-actions">
+      <a href="/login" class="login-btn">Sign in</a>
+      <a href="/signup" class="nav-cta magnetic">
+        Get started
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </a>
+    </div>
 
-    <div class="rotator" id="rotator" aria-live="polite"></div>
+  </nav>
 
-    <p class="sub" style="animation-delay:0.9s;">
-      One platform, three vibes. Customers browse and pay, admins run the catalogue, delivery partners move the goods —
-      all inside the same fast, frictionless Thesaurus.
+
+  <!-- HERO -->
+
+  <main class="hero">
+
+    <div class="hero-badge reveal">
+      <span></span>
+      THE NEXT WAY TO SHOP
+    </div>
+
+    <h1 class="hero-title">
+      <span class="line line-1 reveal-text">SHOPPING</span>
+
+      <span class="line line-2">
+        <span class="italic reveal-text">BUT MAKE</span>
+        <span class="outline reveal-text">IT</span>
+      </span>
+
+      <span class="line line-3 reveal-text">
+        OBSESSIVE<span class="dot">.</span>
+      </span>
+    </h1>
+
+
+    <div class="hero-bottom">
+
+      <p class="hero-description reveal">
+        Discover products. Save ideas. Build collections.
+        Shop through an experience designed to feel less like
+        a store and more like a rabbit hole you actually want
+        to fall into.
+      </p>
+
+      <div class="hero-actions reveal">
+
+        <a href="/signup" class="primary-btn magnetic">
+          Start exploring
+          <span class="btn-icon">
+            <i class="fa-solid fa-arrow-right"></i>
+          </span>
+        </a>
+
+        <a href="#discover" class="scroll-btn">
+          <span>SCROLL TO EXPLORE</span>
+          <i class="fa-solid fa-arrow-down"></i>
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- FLOATING CARDS -->
+
+    <div class="floating-card card-1 tilt">
+      <div class="mini-header">
+        <span class="mini-icon pink">
+          <i class="fa-solid fa-heart"></i>
+        </span>
+
+        <span>Trending now</span>
+      </div>
+
+      <div class="card-emoji">🎧</div>
+
+      <h3>Sound that hits different.</h3>
+
+      <div class="mini-footer">
+        <span>12.4K saves</span>
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </div>
+    </div>
+
+
+    <div class="floating-card card-2 tilt">
+
+      <div class="gradient-product">
+        ✦
+      </div>
+
+      <div class="product-info">
+
+        <div>
+          <span>CURATED</span>
+          <h3>The impossible edit</h3>
+        </div>
+
+        <button>
+          <i class="fa-solid fa-plus"></i>
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="floating-card card-3 tilt">
+
+      <div class="people">
+        <div>🧑🏽</div>
+        <div>👩🏻</div>
+        <div>🧑🏾</div>
+      </div>
+
+      <strong>+48k people</strong>
+
+      <span>discovering right now</span>
+
+    </div>
+
+
+    <div class="hero-sticker sticker-1">
+      ✦
+    </div>
+
+    <div class="hero-sticker sticker-2">
+      OMG
+    </div>
+
+    <div class="hero-ring"></div>
+
+  </main>
+
+
+  <!-- MARQUEE -->
+
+  <section class="marquee-section">
+
+    <div class="marquee">
+
+      <div class="marquee-track">
+
+        <span>DISCOVER</span>
+        <b>✦</b>
+
+        <span>SAVE</span>
+        <b>✦</b>
+
+        <span>OBSESS</span>
+        <b>✦</b>
+
+        <span>REPEAT</span>
+        <b>✦</b>
+
+        <span>DISCOVER</span>
+        <b>✦</b>
+
+        <span>SAVE</span>
+        <b>✦</b>
+
+        <span>OBSESS</span>
+        <b>✦</b>
+
+        <span>REPEAT</span>
+        <b>✦</b>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- PINTEREST STYLE DISCOVERY -->
+
+  <section class="discover-section" id="discover">
+
+    <div class="section-heading reveal">
+
+      <span class="section-tag">
+        <i class="fa-solid fa-compass"></i>
+        DISCOVERY ENGINE
+      </span>
+
+      <h2>
+        Go down the
+        <em>right rabbit hole.</em>
+      </h2>
+
+      <p>
+        Every scroll should feel like discovering something
+        you didn't know you needed.
+      </p>
+
+    </div>
+
+
+    <div class="masonry-grid">
+
+      <article class="masonry-card tall lime-card reveal-card">
+
+        <div class="card-top">
+          <span>01 / EXPLORE</span>
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </div>
+
+        <div class="big-icon">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+        </div>
+
+        <div class="card-content">
+          <h3>Curiosity wins.</h3>
+          <p>Recommendations that get smarter the deeper you go.</p>
+        </div>
+
+      </article>
+
+
+      <article class="masonry-card medium dark-card reveal-card">
+
+        <div class="tiny-label">
+          NOW TRENDING
+        </div>
+
+        <div class="floating-icons">
+
+          <span>✦</span>
+          <span>✺</span>
+          <span>●</span>
+          <span>✦</span>
+
+        </div>
+
+        <h3>
+          The algorithm
+          <em>has taste.</em>
+        </h3>
+
+      </article>
+
+
+      <article class="masonry-card small pink-card reveal-card">
+
+        <div class="reaction">
+          😮
+        </div>
+
+        <strong>
+          Wait... I need this.
+        </strong>
+
+      </article>
+
+
+      <article class="masonry-card wide glass-card reveal-card">
+
+        <div class="glass-content">
+
+          <div class="glass-number">
+            24<span>/7</span>
+          </div>
+
+          <div>
+            <span>ALWAYS ON</span>
+            <h3>Discovery never sleeps.</h3>
+          </div>
+
+        </div>
+
+        <div class="pulse pulse-1"></div>
+        <div class="pulse pulse-2"></div>
+
+      </article>
+
+
+      <article class="masonry-card tall purple-card reveal-card">
+
+        <span class="vertical-text">
+          COLLECTION_004
+        </span>
+
+        <div class="purple-symbol">
+          ✳
+        </div>
+
+        <h3>
+          Save it.
+          <br />
+          <em>Come back later.</em>
+        </h3>
+
+      </article>
+
+
+      <article class="masonry-card medium orange-card reveal-card">
+
+        <div class="rating">
+          ★★★★★
+        </div>
+
+        <h3>
+          Internet taste,
+          but better.
+        </h3>
+
+        <div class="avatar-row">
+          <span>👩🏽</span>
+          <span>🧑🏻</span>
+          <span>👨🏾</span>
+          <span>+</span>
+        </div>
+
+      </article>
+
+    </div>
+
+  </section>
+
+
+  <!-- EXPERIENCE -->
+
+  <section class="experience" id="experience">
+
+    <div class="experience-header reveal">
+
+      <span class="section-tag">
+        <i class="fa-solid fa-bolt"></i>
+        BUILT FOR SPEED
+      </span>
+
+      <h2>
+        One platform.
+        <br />
+        <em>Three different worlds.</em>
+      </h2>
+
+    </div>
+
+
+    <div class="experience-cards">
+
+      <article class="experience-card customer-card reveal-card">
+
+        <div class="exp-number">01</div>
+
+        <div class="exp-icon">
+          <i class="fa-solid fa-bag-shopping"></i>
+        </div>
+
+        <span class="exp-label">
+          FOR CUSTOMERS
+        </span>
+
+        <h3>
+          Browse like
+          you mean it.
+        </h3>
+
+        <p>
+          Search, discover, save and buy without fighting
+          your interface.
+        </p>
+
+        <a href="/signup">
+          Explore
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+      </article>
+
+
+      <article class="experience-card admin-card reveal-card">
+
+        <div class="exp-number">02</div>
+
+        <div class="exp-icon">
+          <i class="fa-solid fa-chart-line"></i>
+        </div>
+
+        <span class="exp-label">
+          FOR ADMINS
+        </span>
+
+        <h3>
+          Control without
+          the chaos.
+        </h3>
+
+        <p>
+          Products, orders, analytics and operations.
+          One command center.
+        </p>
+
+        <a href="/login">
+          Open dashboard
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+      </article>
+
+
+      <article class="experience-card delivery-card reveal-card">
+
+        <div class="exp-number">03</div>
+
+        <div class="exp-icon">
+          <i class="fa-solid fa-truck-fast"></i>
+        </div>
+
+        <span class="exp-label">
+          FOR DELIVERY
+        </span>
+
+        <h3>
+          Less waiting.
+          More moving.
+        </h3>
+
+        <p>
+          Real-time updates and streamlined delivery
+          workflows that keep things moving.
+        </p>
+
+        <a href="/signup">
+          Start moving
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+      </article>
+
+    </div>
+
+  </section>
+
+
+  <!-- FEATURES -->
+
+  <section class="features-section" id="features">
+
+    <div class="features-intro reveal">
+
+      <span class="section-tag">
+        <i class="fa-solid fa-cubes"></i>
+        UNDER THE HOOD
+      </span>
+
+      <h2>
+        Serious tech.
+        <em>Zero boring.</em>
+      </h2>
+
+    </div>
+
+
+    <div class="bento-grid">
+
+      <article class="bento-card big-feature reveal-card">
+
+        <div class="feature-icon">
+          <i class="fa-solid fa-bolt"></i>
+        </div>
+
+        <div>
+
+          <span>REAL-TIME</span>
+
+          <h3>
+            Everything moves
+            at the speed of now.
+          </h3>
+
+          <p>
+            Products, carts, orders and updates without
+            constantly refreshing your screen.
+          </p>
+
+        </div>
+
+        <div class="speed-lines">
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+        </div>
+
+      </article>
+
+
+      <article class="bento-card security-feature reveal-card">
+
+        <div class="feature-icon">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+
+        <h3>
+          Locked.
+          <br />
+          Loaded.
+        </h3>
+
+        <span>SECURE BY DEFAULT</span>
+
+      </article>
+
+
+      <article class="bento-card search-feature reveal-card">
+
+        <div class="search-ui">
+
+          <i class="fa-solid fa-magnifying-glass"></i>
+
+          <span>Search anything...</span>
+
+          <kbd>⌘ K</kbd>
+
+        </div>
+
+        <h3>
+          Find it before
+          you finish typing.
+        </h3>
+
+      </article>
+
+
+      <article class="bento-card adaptive-feature reveal-card">
+
+        <div class="adaptive-shapes">
+
+          <span></span>
+          <span></span>
+          <span></span>
+
+        </div>
+
+        <h3>
+          Looks good
+          everywhere.
+        </h3>
+
+      </article>
+
+    </div>
+
+  </section>
+
+
+  <!-- CTA -->
+
+  <section class="final-cta">
+
+    <div class="cta-orb orb-a"></div>
+    <div class="cta-orb orb-b"></div>
+
+    <div class="cta-content reveal">
+
+      <span class="cta-tag">
+        THE INTERNET IS WAITING
+      </span>
+
+      <h2>
+        Stop scrolling.
+        <br />
+
+        <em>Start discovering.</em>
+      </h2>
+
+      <p>
+        Your next obsession is probably already here.
+      </p>
+
+      <a href="/signup" class="mega-button magnetic">
+
+        <span>Get started for free</span>
+
+        <div class="mega-arrow">
+          <i class="fa-solid fa-arrow-right"></i>
+        </div>
+
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div class="footer-logo">
+      THESAURUS<span>.</span>
+    </div>
+
+    <p>
+      Shopping, redesigned for the chronically curious.
     </p>
-    <div class="role-row">
-      <div class="role-pill customer" style="animation:fade-up .6s 1.0s cubic-bezier(.16,1,.3,1) forwards;"><span class="dot"></span>Customer</div>
-      <div class="role-pill admin" style="animation:fade-up .6s 1.1s cubic-bezier(.16,1,.3,1) forwards;"><span class="dot"></span>Admin</div>
-      <div class="role-pill delivery" style="animation:fade-up .6s 1.2s cubic-bezier(.16,1,.3,1) forwards;"><span class="dot"></span>Delivery partner</div>
-    </div>
-    <div class="cta-row">
-      <a routerLink="/signup" class="btn-primary" style="animation:fade-up .6s 1.3s cubic-bezier(.16,1,.3,1) forwards;">Get started free →</a>
-      <a routerLink="/login" class="btn-secondary" style="animation:fade-up .6s 1.4s cubic-bezier(.16,1,.3,1) forwards;">I already have an account</a>
-    </div>
-  </div>
 
-  <svg class="sticker" width="80" height="90" viewBox="0 0 100 100" style="top:14%; right:9%; --rot:-6deg;"><use href="#sticker-bag"/></svg>
-</section>
-
-<section class="collage-section">
-  <div class="collage" id="collage">
-    <div class="collage-ring" id="collageRing">
-      <div class="circle-card c1"><img src="https://images.unsplash.com/photo-1607082349566-187342175e2f?w=500&q=80" alt=""></div>
-      <div class="circle-card c2"></div>
-      <div class="circle-card c3"></div>
-      <div class="circle-card c4"></div>
-      <div class="circle-card c5"></div>
+    <div class="footer-links">
+      <a href="/login">Sign in</a>
+      <a href="/signup">Create account</a>
+      <a href="#">Back to top ↑</a>
     </div>
-    <div class="badge-tag">100% Fresh, Every Order</div>
-  </div>
-</section>
 
-<div class="divider-marquee">
-  <div class="track">
-    <span>REAL-TIME EVERYTHING</span><span>BANK-GRADE SECURITY</span><span>SMART SEARCH</span><span>ADAPTIVE UI</span>
-    <span>REAL-TIME EVERYTHING</span><span>BANK-GRADE SECURITY</span><span>SMART SEARCH</span><span>ADAPTIVE UI</span>
-  </div>
-</div>
+  </footer>
 
-<!-- CUSTOMERS -->
-<section class="audience customer">
-  <div class="audience-copy">
-    <div class="audience-label"><span class="for">Why shop with us</span>Customers</div>
-    <div class="audience-item">
-      <h4>Lightning fast experience</h4>
-      <p>Say goodbye to clunky interfaces. Thesaurus is engineered for speed, letting you browse, search, and checkout in seconds. Your time is precious — we don't waste it.</p>
-    </div>
-    <div class="audience-item">
-      <h4>Premium curation, always in stock</h4>
-      <p>From everyday groceries to premium electronics, discover a curated catalog with real-time stock updates. If you see it, you can buy it.</p>
-    </div>
-    <div class="audience-item">
-      <h4>Effortless order tracking</h4>
-      <p>Know exactly where your order is at all times. From checkout to your doorstep, live status updates keep you in the loop.</p>
-    </div>
-  </div>
-  <div class="audience-visual">
-    <svg width="220" height="220" viewBox="0 0 100 100" class="sticker" style="position:relative; top:auto; right:auto; --rot:4deg;"><use href="#sticker-bag"/></svg>
-  </div>
-</section>
 
-<!-- ADMINS -->
-<section class="audience admin reverse">
-  <div class="audience-copy">
-    <div class="audience-label"><span class="for">Why manage with us</span>Admins</div>
-    <div class="audience-item">
-      <h4>Command center control</h4>
-      <p>Manage your entire inventory, track real-time analytics, and oversee orders from a beautifully designed, intuitive dashboard. You run the business — we handle the complexity.</p>
-    </div>
-    <div class="audience-item">
-      <h4>Instant inventory sync</h4>
-      <p>Never oversell again. Our real-time database ensures your stock levels stay perfectly synced across every active user.</p>
-    </div>
-  </div>
-  <div class="audience-visual">
-    <svg width="200" height="200" viewBox="0 0 100 100" class="sticker" style="position:relative; top:auto; right:auto; --rot:-5deg;"><use href="#sticker-gauge"/></svg>
-  </div>
-</section>
+  <script src="landing.ts"></script>
 
-<!-- DELIVERY -->
-<section class="audience delivery">
-  <div class="audience-copy">
-    <div class="audience-label"><span class="for">Why deliver with us</span>Delivery partners</div>
-    <div class="audience-item">
-      <h4>Streamlined routes, higher earnings</h4>
-      <p>Our smart delivery dashboard assigns orders efficiently. Less time figuring out where to go means more deliveries completed and higher earnings.</p>
-    </div>
-    <div class="audience-item">
-      <h4>Zero friction pickups</h4>
-      <p>Clear instructions, one-tap status updates, and direct customer routing make every delivery a breeze. Just open the app and go.</p>
-    </div>
-  </div>
-  <div class="audience-visual">
-    <svg width="240" height="200" viewBox="0 0 100 100" class="sticker" style="position:relative; top:auto; right:auto; --rot:3deg;"><use href="#sticker-scooter"/></svg>
-  </div>
-</section>
-
-<!-- FEATURE GRID -->
-<section class="features">
-  <div class="features-head">
-    <p class="eyebrow">What's under the hood</p>
-    <h2>Everything, engineered in</h2>
-  </div>
-  <div class="feature-grid">
-    <div class="feature-card"><span class="glyph">⚡</span><h4>Real-time everything</h4><p>Stock, carts, and order statuses update instantly. No page refreshes required.</p></div>
-    <div class="feature-card"><span class="glyph">🔒</span><h4>Bank-grade security</h4><p>Your data is protected by industry-leading encryption and authentication.</p></div>
-    <div class="feature-card"><span class="glyph">🔍</span><h4>Smart search</h4><p>Find exactly what you're looking for instantly, even if you don't know the exact name.</p></div>
-    <div class="feature-card"><span class="glyph">✨</span><h4>Adaptive UI</h4><p>A beautiful, frosted-glass design that looks and feels incredible on any device.</p></div>
-  </div>
-</section>
-
-<!-- FINAL CTA -->
-<section class="final-cta">
-  <h2>Ready to shop the <span class="accent">future</span>?</h2>
-  <button class="cta-cycle-btn" id="ctaBtn">Start shopping now</button>
-</section>
-
-<div style="display:flex; justify-content:center; padding:56px 0;">
-  <div class="signup-card">
-    <h3>Create your account</h3>
-    <p>&lt;app-signup&gt; component renders here</p>
-    <button class="signup-mock-btn">Continue</button>
-  </div>
-</div>
+</body>
+</html>
