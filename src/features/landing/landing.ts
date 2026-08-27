@@ -85,6 +85,13 @@ export class LandingComponent implements AfterViewInit, OnDestroy {
         });
       }, { threshold:0.15 });
       revealEls.forEach(el => this.observer.observe(el));
+    } else if (revealEls.length > 0) {
+      // Fallback: if IntersectionObserver isn't available, don't leave these
+      // permanently invisible (opacity:0 in CSS) — just show them.
+      revealEls.forEach(el => {
+        (el as HTMLElement).style.opacity = '1';
+        (el as HTMLElement).style.transform = 'none';
+      });
     }
 
     // 5. Rotating tagline
