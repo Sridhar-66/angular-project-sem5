@@ -1,12 +1,14 @@
 <!-- Customer Shell Layout -->
 <nav class="navbar navbar-customer">
   <span class="navbar-brand">
-    <span style="font-size:1.1rem;">🏛️</span> Thesaurus
+    <span style="font-size:1.1rem;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:text-bottom"><path d="m16 6 4 14"/><path d="M12 6v14"/><path d="M8 8v12"/><path d="M4 4v16"/></svg>
+    </span> Thesaurus
   </span>
   <span class="navbar-spacer"></span>
   <div class="navbar-actions">
     <!-- Cart badge -->
-    <a id="customer-nav-cart" routerLink="cart" class="cart-nav-btn">
+    <a id="customer-nav-cart" routerLink="cart" class="cart-nav-btn" style="margin-right: 8px;">
       🛒
       @if (cart.itemCount() > 0) {
         <span class="cart-count-badge">{{ cart.itemCount() }}</span>
@@ -17,33 +19,50 @@
     <app-notification-bell></app-notification-bell>
 
     <span class="badge badge-customer">🛍️ Customer</span>
-    <span style="color:var(--color-text-muted); font-size:0.85rem; font-weight:600;">{{ auth.profile()?.full_name }}</span>
+    <span class="customer-name-pill">{{ auth.profile()?.full_name }}</span>
     <button id="customer-logout" class="btn btn-secondary btn-sm" (click)="logout()">Sign Out</button>
   </div>
 </nav>
 
-<!-- Tab Navigation (teal accent) -->
-<div class="customer-tab-nav">
-  <a id="customer-tab-browse" routerLink="browse" routerLinkActive="active" class="tab-link">
-    🔍 Browse
-  </a>
-  <a id="customer-tab-cart" routerLink="cart" routerLinkActive="active" class="tab-link">
-    🛒 Cart
-    @if (cart.itemCount() > 0) {
-      <span class="tab-badge">{{ cart.itemCount() }}</span>
-    }
-  </a>
-  <a id="customer-tab-orders" routerLink="my-orders" routerLinkActive="active" class="tab-link">
-    📦 My Orders
-  </a>
-  <a routerLink="account" routerLinkActive="active" class="tab-link">
-    👤 Account
-  </a>
-</div>
+<div class="noise"></div>
+<div class="bg-grid"></div>
+<div class="cursor-glow" id="cursor-glow"></div>
 
-<main class="customer-content">
-  <router-outlet></router-outlet>
-</main>
+<!-- Ambient background blobs for customer role -->
+<div class="customer-ambient-blob blob-1"></div>
+<div class="customer-ambient-blob blob-2"></div>
+<div class="customer-ambient-blob blob-3"></div>
+
+<div class="customer-layout">
+  <!-- Premium Tab Navigation -->
+  <div class="customer-tab-nav-wrap">
+    <div class="customer-tab-nav glass">
+      <a id="customer-tab-browse" routerLink="browse" routerLinkActive="active" class="tab-link">
+        <span class="tab-icon">🔍</span>
+        <span class="tab-label">Browse</span>
+      </a>
+      <a id="customer-tab-cart" routerLink="cart" routerLinkActive="active" class="tab-link">
+        <span class="tab-icon">🛒</span>
+        <span class="tab-label">Cart</span>
+        @if (cart.itemCount() > 0) {
+          <span class="tab-badge tab-badge-pulse">{{ cart.itemCount() }}</span>
+        }
+      </a>
+      <a id="customer-tab-orders" routerLink="my-orders" routerLinkActive="active" class="tab-link">
+        <span class="tab-icon">📦</span>
+        <span class="tab-label">My Orders</span>
+      </a>
+      <a id="customer-tab-account" routerLink="account" routerLinkActive="active" class="tab-link">
+        <span class="tab-icon">👤</span>
+        <span class="tab-label">Account</span>
+      </a>
+    </div>
+  </div>
+
+  <main class="customer-content" style="position: relative; z-index: 5;">
+    <router-outlet></router-outlet>
+  </main>
+</div>
 
 <!-- Global Toasts -->
 <app-toast></app-toast>

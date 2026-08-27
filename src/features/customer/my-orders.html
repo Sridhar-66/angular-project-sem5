@@ -1,27 +1,32 @@
-<div class="page-header" style="margin-bottom:24px;">
-  <h1 class="page-title">📦 My Orders</h1>
-  <p class="page-subtitle">{{ orderSvc.myOrders().length }} order(s)</p>
+<div class="customer-page-header">
+  <div class="customer-page-header-left">
+    <div class="customer-page-icon">📦</div>
+    <div>
+      <h1 class="customer-page-title">My Orders</h1>
+      <p class="customer-page-subtitle">{{ orderSvc.myOrders().length }} order(s) placed</p>
+    </div>
+  </div>
 </div>
 
 @if (orderSvc.loading()) {
   <div class="loading-state">
     <div class="spinner"></div>
-    <p>Loading orders…</p>
+    <p>Loading your orders…</p>
   </div>
 }
 
 @if (!orderSvc.loading() && orderSvc.myOrders().length === 0) {
-  <div class="empty-state">
-    <div class="empty-icon">📦</div>
+  <div class="empty-state cust-empty-state">
+    <div class="empty-icon cust-empty-icon">📦</div>
     <h3>No orders yet</h3>
-    <p>Place your first order by browsing products!</p>
+    <p>Place your first order by browsing our products!</p>
   </div>
 }
 
 @if (!orderSvc.loading() && orderSvc.myOrders().length > 0) {
   <div class="orders-list">
-    @for (order of orderSvc.myOrders(); track order.id) {
-      <div class="order-card card">
+    @for (order of orderSvc.myOrders(); track order.id; let i = $index) {
+      <div class="order-card card pcard-animate" [style.animation-delay]="(i * 70) + 'ms'">
         <!-- Order Header -->
         <div
           class="order-card-header"
@@ -38,8 +43,8 @@
               {{ statusLabel(order.order_status) }}
             </span>
             <span class="order-total-label">₹{{ order.total_amount | number:'1.2-2' }}</span>
-            <span class="order-expand-icon" style="transition: transform 0.2s ease;"
-              [style.transform]="expandedOrderId === order.id ? 'rotate(180deg)' : 'rotate(0)'">▼</span>
+            <span class="order-expand-icon"
+              [class.expanded]="expandedOrderId === order.id">▼</span>
           </div>
         </div>
 

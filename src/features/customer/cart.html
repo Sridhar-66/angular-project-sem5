@@ -1,15 +1,20 @@
-<div class="page-header" style="margin-bottom:24px;">
-  <h1 class="page-title">🛒 Cart</h1>
-  <p class="page-subtitle">{{ cart.itemCount() }} item(s) · ₹{{ cart.cartTotal() | number:'1.2-2' }} total</p>
+<div class="customer-page-header">
+  <div class="customer-page-header-left">
+    <div class="customer-page-icon">🛒</div>
+    <div>
+      <h1 class="customer-page-title">Your Cart</h1>
+      <p class="customer-page-subtitle">{{ cart.itemCount() }} item(s) · ₹{{ cart.cartTotal() | number:'1.2-2' }} total</p>
+    </div>
+  </div>
 </div>
 
 @if (cart.items().length === 0) {
-  <div class="empty-state">
-    <div class="empty-icon">🛒</div>
+  <div class="empty-state cust-empty-state">
+    <div class="empty-icon cust-empty-icon">🛒</div>
     <h3>Your cart is empty</h3>
-    <p>Add products from the browse page.</p>
-    <button id="go-browse-btn" class="btn btn-primary" style="margin-top:8px;" (click)="continueShopping()">
-      Browse Products
+    <p>Add products from the browse page to get started.</p>
+    <button id="go-browse-btn" class="btn btn-primary cust-empty-btn" (click)="continueShopping()">
+      🔍 Browse Products
     </button>
   </div>
 }
@@ -18,8 +23,8 @@
   <div class="cart-layout">
     <!-- Cart Items -->
     <div class="cart-items-list">
-      @for (item of cart.items(); track item.product.id) {
-        <div class="cart-item card">
+      @for (item of cart.items(); track item.product.id; let i = $index) {
+        <div class="cart-item card pcard-animate" [style.animation-delay]="(i * 60) + 'ms'">
           <div class="cart-item-img-wrap">
             @if (item.product.image_url) {
               <img [src]="item.product.image_url" [alt]="item.product.name" class="cart-item-img" />
@@ -66,24 +71,30 @@
 
     <!-- Order Summary -->
     <div class="cart-summary card glass">
-      <h3 class="cart-summary-title">Order Summary</h3>
+      <div class="cart-summary-badge">Order Summary</div>
+      <h3 class="cart-summary-title">Review & Checkout</h3>
 
       <div class="cart-summary-rows">
         @for (item of cart.items(); track item.product.id) {
           <div class="cart-summary-row">
-            <span>{{ item.product.name }} × {{ item.quantity }}</span>
+            <span class="cart-summary-item-name">{{ item.product.name }} <span class="cart-summary-qty">×{{ item.quantity }}</span></span>
             <span>₹{{ (item.product.price * item.quantity) | number:'1.2-2' }}</span>
           </div>
         }
       </div>
 
       <div class="cart-summary-divider"></div>
+
       <div class="cart-summary-total">
         <span>Total</span>
         <span class="cart-total-price">₹{{ cart.cartTotal() | number:'1.2-2' }}</span>
       </div>
 
-      <button id="checkout-btn" class="btn btn-primary btn-block" style="margin-top:20px;" (click)="checkout()">
+      <div class="cart-summary-info">
+        <span>🚚 Free delivery on orders above ₹499</span>
+      </div>
+
+      <button id="checkout-btn" class="btn btn-primary btn-block cart-checkout-btn" style="margin-top:20px;" (click)="checkout()">
         Proceed to Checkout →
       </button>
       <button class="btn btn-secondary btn-block" style="margin-top:8px;" (click)="continueShopping()">

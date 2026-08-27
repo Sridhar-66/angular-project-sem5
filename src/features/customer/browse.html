@@ -1,39 +1,44 @@
 <!-- Search & Filter Bar -->
-<div class="browse-toolbar">
-  <div class="browse-search-wrap">
-    <span class="search-icon">🔍</span>
-    <input
-      id="browse-search"
-      class="input browse-search-input"
-      type="search"
-      placeholder="Search products…"
-      [ngModel]="search()"
-      (ngModelChange)="search.set($event)"
-    />
+<div class="browse-header-section">
+  <div class="browse-page-title">
+    <h1 class="browse-heading">Discover Products</h1>
+    <p class="browse-subheading">Curated collection · {{ filteredProducts().length }} items</p>
   </div>
-  <select
-    id="browse-category"
-    class="input browse-category-select"
-    [ngModel]="selectedCategory()"
-    (ngModelChange)="selectedCategory.set($event)"
-  >
-    <option value="">All Categories</option>
-    @for (cat of categories(); track cat) {
-      @if (cat) {
-        <option [value]="cat">{{ cat }}</option>
-      }
-    }
-  </select>
-</div>
 
-<p class="browse-count">{{ filteredProducts().length }} products</p>
+  <div class="browse-toolbar">
+    <div class="browse-search-wrap">
+      <span class="search-icon">🔍</span>
+      <input
+        id="browse-search"
+        class="input browse-search-input"
+        type="search"
+        placeholder="Search products…"
+        [ngModel]="search()"
+        (ngModelChange)="search.set($event)"
+      />
+    </div>
+    <select
+      id="browse-category"
+      class="input browse-category-select"
+      [ngModel]="selectedCategory()"
+      (ngModelChange)="selectedCategory.set($event)"
+    >
+      <option value="">All Categories</option>
+      @for (cat of categories(); track cat) {
+        @if (cat) {
+          <option [value]="cat">{{ cat }}</option>
+        }
+      }
+    </select>
+  </div>
+</div>
 
 <!-- Loading: shimmer skeleton -->
 @if (productSvc.loading()) {
   <div class="skeleton-grid">
     @for (i of [1,2,3,4,5,6,8,9]; track i) {
-      <div class="card skeleton-card" style="padding:0; border:1px solid var(--color-border); overflow:hidden;">
-        <div class="skeleton skeleton-img"></div>
+      <div class="product-card" style="overflow:hidden; cursor:default;">
+        <div class="skeleton skeleton-img" style="height:200px; border-radius:0;"></div>
         <div style="padding:16px; display:flex; flex-direction:column; gap:10px;">
           <div class="skeleton skeleton-line medium"></div>
           <div class="skeleton skeleton-line short"></div>
@@ -60,8 +65,19 @@
 <!-- Products Grid -->
 @if (!productSvc.loading() && filteredProducts().length > 0) {
   <div class="products-grid">
-    @for (product of filteredProducts(); track product.id) {
-      <div class="product-card card" [class.out-of-stock-card]="product.stock_quantity === 0" [routerLink]="['/customer/product', product.id]">
+    @for (product of filteredProducts(); track product.id; let i = $index) {
+      <div
+        class="product-card pcard-animate"
+        [class.out-of-stock-card]="product.stock_quantity === 0"
+        [routerLink]="['/customer/product', product.id]"
+        [style.animation-delay]="(i % 12 * 60) + 'ms'"
+      >
+        <!-- Glow shimmer effect overlay -->
+        <div class="pcard-glow-ring"></div>
+
+        <!-- Top shine bar -->
+        <div class="pcard-shine"></div>
+
         <div class="product-img-wrap">
           @if (product.image_url) {
             <img [src]="product.image_url" [alt]="product.name" class="product-img" (error)="handleImageError($event)" />
@@ -75,6 +91,9 @@
           @if (product.stock_quantity === 0) {
             <div class="out-of-stock-overlay">Out of Stock</div>
           }
+          @if (product.stock_quantity > 0 && product.stock_quantity <= 5) {
+            <span class="pcard-low-stock-badge">🔥 Only {{ product.stock_quantity }} left</span>
+          }
         </div>
 
         <div class="product-card-body">
@@ -87,7 +106,7 @@
               class="product-stock-info"
               [class.low-stock]="product.stock_quantity > 0 && product.stock_quantity <= 5"
             >
-              {{ product.stock_quantity > 0 ? product.stock_quantity + ' left' : '' }}
+              {{ product.stock_quantity > 0 ? product.stock_quantity + ' in stock' : '' }}
             </span>
           </div>
 
@@ -109,11 +128,15 @@
             } @else {
               <button
                 [id]="'add-to-cart-' + product.id"
-                class="btn btn-primary btn-block"
+                class="btn btn-primary btn-block pcard-add-btn"
                 [class.btn-added]="addedProductId() === product.id"
                 (click)="$event.stopPropagation(); addToCart(product)"
               >
-                {{ addedProductId() === product.id ? '✅ Added!' : '🛒 Add to Cart' }}
+                @if (addedProductId() === product.id) {
+                  <span class="pcard-added-text">✅ Added!</span>
+                } @else {
+                  <span>🛒 Add to Cart</span>
+                }
               </button>
             }
           } @else {

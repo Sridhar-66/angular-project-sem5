@@ -1,7 +1,18 @@
+<div class="customer-page-header">
+  <div class="customer-page-header-left">
+    <div class="customer-page-icon">💳</div>
+    <div>
+      <h1 class="customer-page-title">Checkout</h1>
+      <p class="customer-page-subtitle">Secure · Fast · Easy</p>
+    </div>
+  </div>
+</div>
+
 <div class="checkout-layout">
   <!-- Order Summary Panel -->
-  <div class="checkout-summary card glass">
-    <h2 class="checkout-section-title">📋 Order Summary</h2>
+  <div class="checkout-summary card glass pcard-animate" style="animation-delay:0ms;">
+    <div class="checkout-summary-badge">Order Summary</div>
+    <h2 class="checkout-section-title">📋 Your Items</h2>
     @for (item of cart.items(); track item.product.id) {
       <div class="checkout-item">
         <div class="checkout-item-info">
@@ -20,10 +31,14 @@
     <div class="checkout-test-badge">
       🧪 Test Mode — No real payment processed
     </div>
+
+    <div class="checkout-secure-note">
+      <span>🔒 Secured by 256-bit encryption</span>
+    </div>
   </div>
 
   <!-- Payment Form -->
-  <div class="checkout-form card">
+  <div class="checkout-form card pcard-animate" style="animation-delay:80ms;">
     <h2 class="checkout-section-title">💳 Checkout Details</h2>
 
     @if (error()) {
@@ -31,7 +46,9 @@
     }
 
     <div class="form-group" style="margin-bottom:24px;">
-      <label class="form-label" for="checkout-address">Delivery Address</label>
+      <label class="form-label" for="checkout-address">
+        <span class="form-label-icon">📍</span> Delivery Address
+      </label>
       <textarea
         id="checkout-address"
         class="form-input textarea"
@@ -42,59 +59,63 @@
       ></textarea>
     </div>
 
-    <div class="form-group" style="margin-bottom:16px;">
-      <label class="form-label" for="card-name">Name on Card</label>
-      <input
-        id="card-name"
-        class="input"
-        type="text"
-        placeholder="John Doe"
-        [ngModel]="cardName()"
-        (ngModelChange)="cardName.set($event)"
-      />
-    </div>
+    <div class="checkout-card-section">
+      <div class="checkout-card-section-title">Card Details</div>
 
-    <div class="form-group" style="margin-bottom:16px;">
-      <label class="form-label" for="card-number">Card Number</label>
-      <div class="card-input-wrap">
-        <span class="card-icon">💳</span>
+      <div class="form-group" style="margin-bottom:16px;">
+        <label class="form-label" for="card-name">Name on Card</label>
         <input
-          id="card-number"
-          class="input card-number-input"
-          type="text"
-          placeholder="4242 4242 4242 4242"
-          maxlength="19"
-          [value]="cardNumber()"
-          (input)="formatCardNumber($event)"
-        />
-      </div>
-      <p class="form-hint">Use any 16-digit number for testing</p>
-    </div>
-
-    <div class="form-row" style="margin-bottom:16px;">
-      <div class="form-group">
-        <label class="form-label" for="card-expiry">Expiry</label>
-        <input
-          id="card-expiry"
+          id="card-name"
           class="input"
           type="text"
-          placeholder="MM/YY"
-          maxlength="5"
-          [ngModel]="cardExpiry()"
-          (ngModelChange)="cardExpiry.set($event)"
+          placeholder="John Doe"
+          [ngModel]="cardName()"
+          (ngModelChange)="cardName.set($event)"
         />
       </div>
-      <div class="form-group">
-        <label class="form-label" for="card-cvc">CVC</label>
-        <input
-          id="card-cvc"
-          class="input"
-          type="text"
-          placeholder="123"
-          maxlength="4"
-          [ngModel]="cardCvc()"
-          (ngModelChange)="cardCvc.set($event)"
-        />
+
+      <div class="form-group" style="margin-bottom:16px;">
+        <label class="form-label" for="card-number">Card Number</label>
+        <div class="card-input-wrap">
+          <span class="card-icon">💳</span>
+          <input
+            id="card-number"
+            class="input card-number-input"
+            type="text"
+            placeholder="4242 4242 4242 4242"
+            maxlength="19"
+            [value]="cardNumber()"
+            (input)="formatCardNumber($event)"
+          />
+        </div>
+        <p class="form-hint">Use any 16-digit number for testing</p>
+      </div>
+
+      <div class="form-row" style="margin-bottom:16px;">
+        <div class="form-group">
+          <label class="form-label" for="card-expiry">Expiry</label>
+          <input
+            id="card-expiry"
+            class="input"
+            type="text"
+            placeholder="MM/YY"
+            maxlength="5"
+            [ngModel]="cardExpiry()"
+            (ngModelChange)="cardExpiry.set($event)"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="card-cvc">CVC</label>
+          <input
+            id="card-cvc"
+            class="input"
+            type="text"
+            placeholder="123"
+            maxlength="4"
+            [ngModel]="cardCvc()"
+            (ngModelChange)="cardCvc.set($event)"
+          />
+        </div>
       </div>
     </div>
 
@@ -102,7 +123,7 @@
       <button class="btn btn-secondary" (click)="backToCart()">← Back to Cart</button>
       <button
         id="place-order-btn"
-        class="btn btn-primary"
+        class="btn btn-primary checkout-place-btn"
         [disabled]="placing() || !isFormValid"
         (click)="placeOrder()"
       >
