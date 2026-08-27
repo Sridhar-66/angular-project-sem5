@@ -19,7 +19,7 @@
 }
 
 @if (!orderSvc.loading() && orderSvc.allOrders().length > 0) {
-  <div class="table-wrap card" style="padding:0;">
+  <div class="table-wrap card reveal" id="orders-table-wrap" style="padding:0;">
     <table class="data-table">
       <thead>
         <tr>

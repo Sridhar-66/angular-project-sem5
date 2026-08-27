@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { RouterModule, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../core/auth.service';
@@ -13,7 +13,8 @@ import { ToastComponent } from '../../ui/toast';
   imports: [CommonModule, RouterModule, RouterLink, RouterLinkActive, NotificationBellComponent, ToastComponent],
   templateUrl: './dashboard.html',
 })
-export class AdminDashboardComponent implements OnInit {
+export class AdminDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
+  private mouseMoveListener?: (e: MouseEvent) => void;
   constructor(
     public auth: AuthService,
     public productSvc: ProductService,
@@ -23,6 +24,22 @@ export class AdminDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.productSvc.loadProducts();
     this.orderSvc.loadAllOrders();
+  }
+
+  ngAfterViewInit(): void {
+    const glow = document.getElementById('cursor-glow');
+    if (glow) {
+      this.mouseMoveListener = (e: MouseEvent) => {
+        glow.style.transform = `translate(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%))`;
+      };
+      window.addEventListener('mousemove', this.mouseMoveListener);
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.mouseMoveListener) {
+      window.removeEventListener('mousemove', this.mouseMoveListener);
+    }
   }
 
   logout() {

@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, signal } from '@angular/core';
+import { Component, OnInit, computed, signal, AfterViewInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrderService, Order } from '../../core/order.service';
 import { ProductService } from '../../core/product.service';
@@ -15,8 +15,9 @@ interface ProductSale {
   imports: [CommonModule],
   templateUrl: './analytics.html',
 })
-export class AdminAnalyticsComponent implements OnInit {
+export class AdminAnalyticsComponent implements OnInit, AfterViewInit, OnDestroy {
   loading = signal(true);
+  private observer?: IntersectionObserver;
 
   constructor(
     public orderSvc: OrderService,
@@ -26,6 +27,25 @@ export class AdminAnalyticsComponent implements OnInit {
   ngOnInit(): void {
     // Orders are already loaded by parent dashboard; just mark ready
     this.loading.set(false);
+  }
+
+  ngAfterViewInit(): void {
+    this.observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    // Timeout to ensure elements are rendered
+    setTimeout(() => {
+      document.querySelectorAll('.reveal').forEach(el => this.observer?.observe(el));
+    }, 100);
+  }
+
+  ngOnDestroy(): void {
+    if (this.observer) this.observer.disconnect();
   }
 
   get orders(): Order[] {

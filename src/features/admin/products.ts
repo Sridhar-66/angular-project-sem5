@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, computed } from '@angular/core';
+import { Component, OnInit, signal, computed, AfterViewInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService, Product, ProductInput } from '../../core/product.service';
@@ -28,7 +28,7 @@ const emptyForm = (): ProductForm => ({
   imports: [CommonModule, FormsModule],
   templateUrl: './products.html',
 })
-export class AdminProductsComponent implements OnInit {
+export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   // Modal state
   showModal = signal(false);
   editingProduct = signal<Product | null>(null);
@@ -57,8 +57,52 @@ export class AdminProductsComponent implements OnInit {
     public auth: AuthService
   ) {}
 
+  private observer?: IntersectionObserver;
+
   ngOnInit(): void {
     this.productSvc.loadProducts();
+  }
+
+  ngAfterViewInit(): void {
+    this.observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    // MutationObserver to watch for new cards being rendered
+    const grid = document.getElementById('product-grid');
+    if (grid) {
+      new MutationObserver(() => {
+        document.querySelectorAll('.reveal').forEach(el => this.observer?.observe(el));
+      }).observe(grid, { childList: true, subtree: true });
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.observer) this.observer.disconnect();
+  }
+
+  onMouseMove(event: MouseEvent, productId: string) {
+    const card = document.getElementById(`card-${productId}`);
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = ((y - centerY) / centerY) * -8;
+    const rotateY = ((x - centerX) / centerX) * 8;
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+  }
+
+  onMouseLeave(productId: string) {
+    const card = document.getElementById(`card-${productId}`);
+    if (card) {
+      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+    }
   }
 
   openCreate(): void {

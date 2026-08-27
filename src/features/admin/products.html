@@ -57,9 +57,10 @@
 
 <!-- Products Grid -->
 @if (!productSvc.loading() && filteredProducts().length > 0) {
-  <div class="products-admin-grid">
+  <div class="masonry-grid" id="product-grid">
     @for (product of filteredProducts(); track product.id) {
-      <div class="product-admin-card card">
+      <div class="masonry-item tilt-card-wrapper reveal">
+        <div class="product-admin-card card tilt-card" (mousemove)="onMouseMove($event, product.id)" (mouseleave)="onMouseLeave(product.id)" [id]="'card-' + product.id">
         <div class="product-admin-img-wrap">
           @if (product.image_url) {
             <img [src]="product.image_url" [alt]="product.name" class="product-admin-img" />
@@ -104,6 +105,7 @@
               {{ deletingId() === product.id ? '⏳' : '🗑️' }} Delete
             </button>
           </div>
+        </div>
         </div>
       </div>
     }

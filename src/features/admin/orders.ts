@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, AfterViewInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OrderService, Order } from '../../core/order.service';
@@ -9,9 +9,10 @@ import { OrderService, Order } from '../../core/order.service';
   imports: [CommonModule, FormsModule],
   templateUrl: './orders.html',
 })
-export class AdminOrdersComponent implements OnInit {
+export class AdminOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
   deliveryBoys = signal<{ id: string; full_name: string; email: string }[]>([]);
   assigningOrderId = signal<string | null>(null);
+  private observer?: IntersectionObserver;
 
   constructor(public orderSvc: OrderService) {}
 
@@ -23,6 +24,25 @@ export class AdminOrdersComponent implements OnInit {
     } catch (err) {
       console.error('Failed to load delivery boys', err);
     }
+  }
+
+  ngAfterViewInit(): void {
+    this.observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    // Fallback/Timeout for elements that might load asynchronously
+    setTimeout(() => {
+      document.querySelectorAll('.reveal').forEach(el => this.observer?.observe(el));
+    }, 100);
+  }
+
+  ngOnDestroy(): void {
+    if (this.observer) this.observer.disconnect();
   }
 
   statusLabel(status: Order['order_status']): string {
