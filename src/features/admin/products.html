@@ -5,13 +5,15 @@
     <p class="page-subtitle">{{ productSvc.productCount() }} products in catalogue</p>
   </div>
   <button id="add-product-btn" class="btn btn-primary" (click)="openCreate()" style="gap:8px;">
-    <span style="font-size:1.1rem; font-weight:800; line-height:1;">＋</span> Add Product
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Add Product
   </button>
 </div>
 
 <!-- Search -->
 <div style="position:relative; margin-bottom:24px;">
-  <span style="position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--color-text-dim); pointer-events:none;">🔍</span>
+  <span style="position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--color-text-dim); pointer-events:none; display:flex;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/></svg>
+  </span>
   <input
     id="product-search"
     class="input"
@@ -46,11 +48,11 @@
 <!-- Empty State -->
 @if (!productSvc.loading() && filteredProducts().length === 0) {
   <div class="empty-state">
-    <div class="empty-icon">📦</div>
+    <div class="empty-icon"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
     <h3>No products found</h3>
     <p>{{ search() ? 'Try a different search term.' : 'Add your first product to get started.' }}</p>
     @if (!search()) {
-      <button class="btn btn-primary" style="margin-top:8px;" (click)="openCreate()">＋ Add Product</button>
+      <button class="btn btn-primary" style="margin-top:8px;" (click)="openCreate()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:text-bottom; margin-right:4px;"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Add Product</button>
     }
   </div>
 }
@@ -65,7 +67,7 @@
           @if (product.image_url) {
             <img [src]="product.image_url" [alt]="product.name" class="product-admin-img" />
           } @else {
-            <div class="product-admin-img-placeholder">📦</div>
+            <div class="product-admin-img-placeholder"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
           }
           @if (product.stock_quantity === 0) {
             <span class="product-out-of-stock-badge">Out of Stock</span>
@@ -94,7 +96,7 @@
               class="btn btn-secondary btn-sm"
               style="flex:1;"
               (click)="openEdit(product)"
-            >✏️ Edit</button>
+            ><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:text-bottom; margin-right:4px;"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg> Edit</button>
             <button
               [id]="'delete-product-' + product.id"
               class="btn btn-danger btn-sm"
@@ -102,7 +104,12 @@
               [disabled]="deletingId() === product.id"
               (click)="deleteProduct(product)"
             >
-              {{ deletingId() === product.id ? '⏳' : '🗑️' }} Delete
+              @if (deletingId() === product.id) {
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:text-bottom; margin-right:4px;"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V2"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg>
+              } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:text-bottom; margin-right:4px;"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+              }
+               Delete
             </button>
           </div>
         </div>
@@ -117,8 +124,16 @@
   <div class="modal-backdrop" (click)="closeModal()"></div>
   <div class="modal" role="dialog" aria-modal="true">
     <div class="modal-header">
-      <h2 class="modal-title">{{ editingProduct() ? '✏️ Edit Product' : '＋ Add Product' }}</h2>
-      <button class="modal-close" aria-label="Close" (click)="closeModal()">✕</button>
+      <h2 class="modal-title">
+        @if (editingProduct()) {
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:text-bottom; margin-right:6px;"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg> Edit Product
+        } @else {
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:text-bottom; margin-right:6px;"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Add Product
+        }
+      </h2>
+      <button class="modal-close" aria-label="Close" (click)="closeModal()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
     <div class="modal-body">
       @if (saveError()) {
@@ -133,7 +148,7 @@
             <img [src]="previewUrl()!" alt="Preview" class="img-preview" />
           } @else {
             <div class="img-upload-placeholder">
-              <span>📷</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
               <span>Click to upload image</span>
             </div>
           }
@@ -220,7 +235,13 @@
         [disabled]="saving()"
         (click)="save()"
       >
-        {{ saving() ? '⏳ Saving…' : (editingProduct() ? '✅ Save Changes' : '＋ Create Product') }}
+        @if (saving()) {
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:text-bottom; margin-right:4px;"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V2"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg> Saving…
+        } @else if (editingProduct()) {
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:text-bottom; margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Save Changes
+        } @else {
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:text-bottom; margin-right:4px;"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Create Product
+        }
       </button>
     </div>
   </div>

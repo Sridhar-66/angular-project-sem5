@@ -72,13 +72,10 @@ export class AdminProductsComponent implements OnInit, AfterViewInit, OnDestroy 
       });
     }, { threshold: 0.1 });
     
-    // MutationObserver to watch for new cards being rendered
-    const grid = document.getElementById('product-grid');
-    if (grid) {
-      new MutationObserver(() => {
-        document.querySelectorAll('.reveal').forEach(el => this.observer?.observe(el));
-      }).observe(grid, { childList: true, subtree: true });
-    }
+    const host = document.querySelector('app-admin-products') || document.body;
+    new MutationObserver(() => {
+      host.querySelectorAll('.reveal').forEach(el => this.observer?.observe(el));
+    }).observe(host, { childList: true, subtree: true });
   }
 
   ngOnDestroy(): void {

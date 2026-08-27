@@ -35,10 +35,10 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     }, { threshold: 0.1 });
     
-    // Fallback/Timeout for elements that might load asynchronously
-    setTimeout(() => {
-      document.querySelectorAll('.reveal').forEach(el => this.observer?.observe(el));
-    }, 100);
+    const host = document.querySelector('app-admin-orders') || document.body;
+    new MutationObserver(() => {
+      host.querySelectorAll('.reveal').forEach(el => this.observer?.observe(el));
+    }).observe(host, { childList: true, subtree: true });
   }
 
   ngOnDestroy(): void {
